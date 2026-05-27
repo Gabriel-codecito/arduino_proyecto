@@ -91,7 +91,7 @@ def enviar_notificacion_cotizacion(cotizacion, estado):
         subject=asunto,
         body=template,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[cotizacion.correo],
+        to=['yany.china@gmail.com'],
     )
 
     email.content_subtype = "html"

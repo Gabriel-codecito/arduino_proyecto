@@ -1215,7 +1215,7 @@ class PresupuestoCreateView(CreateView):
             "Presupuesto generado para su cotización",
             "",
             settings.DEFAULT_FROM_EMAIL,
-            [self.cotizacion.correo],
+            ['yany.china@gmail.com'],
             fail_silently=False,
             html_message=html_mensaje,
         )
