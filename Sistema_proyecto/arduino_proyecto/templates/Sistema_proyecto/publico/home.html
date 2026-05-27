@@ -1,0 +1,338 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Inicio | P&U INGENIERÍAS{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center justify-content-center text-center text-light"
+  style="background: linear-gradient(to bottom, rgba(30, 60, 114, 0.8), rgba(42, 82, 152, 0.8)),
+  url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+  height: 90vh; min-height: 600px;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Logo como imagen -->
+        <div class="logo-container mb-4">
+          <img src="{% static 'css/img/image_fondo.png' %}" 
+               alt="P&U INGENIERIAS - Servicios Maestranza" 
+               class="hero-logo mb-3"
+               style="max-height: 120px; width: auto; max-width: 100%;">
+          <h2 class="text-warning fw-bold mb-4" style="font-size: 2rem; letter-spacing: 2px;">
+            SERVICIOS MAESTRANZA
+          </h2>
+          <p class="text-light fs-5 mb-0">
+            <strong class="text-warning">P&U INGENIERIAS</strong> - Soluciones industriales integrales
+          </p>
+        </div>
+
+        <p class="lead mb-4 fs-5">
+          Servicios integrales industriales: <b class="text-warning">Granallado ecológico</b>, mantenimiento técnico 
+          y soluciones energéticas para la industria.
+        </p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+          <a href="{% url 'cotizacion_crear' %}" class="btn btn-warning btn-lg fw-bold">
+            <i class="fa-solid fa-file-invoice-dollar me-2"></i>Solicitar Cotización
+          </a>
+          <a href="{% url 'servicios' %}" class="btn btn-outline-warning btn-lg">
+            <i class="fa-solid fa-gears me-2"></i>Ver Servicios
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección de Servicios con Carrusel -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold text-primary mb-5 display-5">Servicios de Maestranza Especializada</h2>
+    
+    <div id="proyectosCarousel" class="carousel slide shadow-lg rounded-3" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#proyectosCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#proyectosCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#proyectosCarousel" data-bs-slide-to="2"></button>
+        <button type="button" data-bs-target="#proyectosCarousel" data-bs-slide-to="3"></button>
+        <button type="button" data-bs-target="#proyectosCarousel" data-bs-slide-to="4"></button>
+      </div>
+      
+      <div class="carousel-inner rounded-3">
+        <!-- Slide 1: Servicio de Maestranza -->
+        <div class="carousel-item active">
+          <img src="{% static 'css/img/image1.png' %}" 
+               class="d-block w-100 carousel-img" 
+               alt="Servicio de Maestranza"
+               style="height: 500px; object-fit: contain; background-color: #f8f9fa; padding: 20px;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-4">
+            <h4 class="text-warning fw-bold">Servicio de Maestranza</h4>
+            <p class="fs-5">Fabricaciones de piezas y estructuras en distintos materiales y dimensiones</p>
+          </div>
+        </div>
+        
+        <!-- Slide 2: Recubrimientos Anti-Desgaste -->
+        <div class="carousel-item">
+          <img src="{% static 'css/img/image2.png' %}" 
+               class="d-block w-100 carousel-img" 
+               alt="Recubrimientos Anti-Desgaste"
+               style="height: 500px; object-fit: contain; background-color: #f8f9fa; padding: 20px;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-4">
+            <h4 class="text-warning fw-bold">Recubrimientos Anti-Desgaste</h4>
+            <p class="fs-5">Recubrimientos de ductos con cerámica, fabricación de placas anti desgaste y placas caucho cerámica</p>
+          </div>
+        </div>
+        
+        <!-- Slide 3: Fabricaciones en Telas Especiales -->
+        <div class="carousel-item">
+          <img src="{% static 'css/img/image3.png' %}" 
+               class="d-block w-100 carousel-img" 
+               alt="Fabricaciones en Telas Especiales"
+               style="height: 500px; object-fit: contain; background-color: #f8f9fa; padding: 20px;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-4">
+            <h4 class="text-warning fw-bold">Fabricaciones en Telas Especiales</h4>
+            <p class="fs-5">Protecciones, fuelles para cilindros, cubre flanges, válvulas y equipos a medida en PVC para ambientes ácidos y salinos</p>
+          </div>
+        </div>
+        
+        <!-- Slide 4: Reparación y Mantención -->
+        <div class="carousel-item">
+          <img src="{% static 'css/img/image4.png' %}" 
+               class="d-block w-100 carousel-img" 
+               alt="Reparación y Mantención"
+               style="height: 500px; object-fit: contain; background-color: #f8f9fa; padding: 20px;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-4">
+            <h4 class="text-warning fw-bold">Reparación y Mantención</h4>
+            <p class="fs-5">Reparación y mantención de motores eléctricos, válvulas, bombas y cilindros hidráulicos</p>
+          </div>
+        </div>
+        
+        <!-- Slide 5: Reparación de Equipos Especializados -->
+        <div class="carousel-item">
+          <img src="{% static 'css/img/image5.png' %}" 
+               class="d-block w-100 carousel-img" 
+               alt="Reparación de Equipos Especializados"
+               style="height: 500px; object-fit: contain; background-color: #f8f9fa; padding: 20px;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-4">
+            <h4 class="text-warning fw-bold">Reparación Especializada</h4>
+            <p class="fs-5">Reparación de colector de polvo, reductores, ejes motrices y equipos industriales</p>
+          </div>
+        </div>
+      </div>
+      
+      <button class="carousel-control-prev" type="button" data-bs-target="#proyectosCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#proyectosCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Sección de Clientes -->
+<section class="py-5 bg-dark">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-warning mb-3">Nuestros Clientes</h2>
+      <p class="lead text-white">Empresas que confían en nuestros servicios</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+      <!-- Cliente 1 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cliente-card bg-dark border border-warning rounded p-4 text-center h-100">
+          <div class="cliente-imagen-container mb-3">
+            <img src="{% static 'css/img/image_BHP.png' %}" 
+                 alt="Compañía Minera Cerro Colorado Ltda" 
+                 class="cliente-img img-fluid"
+                 style="max-height: 120px; object-fit: contain;"
+                 onerror="this.src='https://via.placeholder.com/300x120/1e3c72/ffffff?text=MINERA+CERRO+COLORADO'">
+          </div>
+          <h5 class="text-warning fw-bold">Compañía Minera Cerro Colorado Ltda</h5>
+        </div>
+      </div>
+
+      <!-- Cliente 2 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cliente-card bg-dark border border-warning rounded p-4 text-center h-100">
+          <div class="cliente-imagen-container mb-3">
+            <img src="{% static 'css/img/image_aramark.png' %}" 
+                 alt="Aramark" 
+                 class="cliente-img img-fluid"
+                 style="max-height: 120px; object-fit: contain;"
+                 onerror="this.src='https://via.placeholder.com/300x120/1e3c72/ffffff?text=ARAMARK'">
+          </div>
+          <h5 class="text-warning fw-bold">Aramark</h5>
+        </div>
+      </div>
+
+      <!-- Cliente 3 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cliente-card bg-dark border border-warning rounded p-4 text-center h-100">
+          <div class="cliente-imagen-container mb-3">
+            <img src="{% static 'css/img/image_SKrental.png' %}" 
+                 alt="SKC Rental" 
+                 class="cliente-img img-fluid"
+                 style="max-height: 120px; object-fit: contain;"
+                 onerror="this.src='https://via.placeholder.com/300x120/1e3c72/ffffff?text=SKC+RENTAL'">
+          </div>
+          <h5 class="text-warning fw-bold">SKC Rental</h5>
+        </div>
+      </div>
+
+      <!-- Cliente 4 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cliente-card bg-dark border border-warning rounded p-4 text-center h-100">
+          <div class="cliente-imagen-container mb-3">
+            <img src="{% static 'css/img/image_SKred.png' %}" 
+                 alt="SKC Red" 
+                 class="cliente-img img-fluid"
+                 style="max-height: 120px; object-fit: contain;"
+                 onerror="this.src='https://via.placeholder.com/300x120/1e3c72/ffffff?text=SKC+RED'">
+          </div>
+          <h5 class="text-warning fw-bold">SKC Red</h5>
+        </div>
+      </div>
+
+      <!-- Cliente 5 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cliente-card bg-dark border border-warning rounded p-4 text-center h-100">
+          <div class="cliente-imagen-container mb-3">
+            <img src="{% static 'css/img/image_sigdotek.png' %}" 
+                 alt="Sigdotek" 
+                 class="cliente-img img-fluid"
+                 style="max-height: 120px; object-fit: contain;"
+                 onerror="this.src='https://via.placeholder.com/300x120/1e3c72/ffffff?text=SIGDOTEK'">
+          </div>
+          <h5 class="text-warning fw-bold">Sigdotek</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección de Llamado a la Acción -->
+<section class="py-5 text-center text-light" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h3 class="fw-bold text-warning display-6 mb-4">¿Necesita soluciones industriales confiables?</h3>
+        <p class="lead mb-4 fs-5">
+          En <b class="text-warning">P&U INGENIERÍAS</b> combinamos experiencia técnica, equipos modernos 
+          y compromiso con la calidad para ofrecer servicios industriales integrales.
+        </p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+          <a href="{% url 'contacto' %}" class="btn btn-warning btn-lg fw-bold">
+            <i class="fa-solid fa-phone-volume me-2"></i>Contáctenos
+          </a>
+          <a href="{% url 'contacto' %}" class="btn btn-outline-warning btn-lg">
+            <i class="fa-solid fa-comments me-2"></i>Solicitar Asesoría
+          </a>
+        </div>
+        
+        <!-- Información de contacto rápida -->
+        <div class="row mt-5 text-light-50">
+          <div class="col-md-4 mb-3">
+            <i class="fas fa-phone text-warning me-2"></i>
+            <strong>Teléfonos:</strong><br>
+            +56 57 2490167<br>
+            +56 996778357
+          </div>
+          <div class="col-md-4 mb-3">
+            <i class="fas fa-envelope text-warning me-2"></i>
+            <strong>Email:</strong><br>
+            puingenierias@gmail.com
+          </div>
+          <div class="col-md-4 mb-3">
+            <i class="fas fa-map-marker-alt text-warning me-2"></i>
+            <strong>Dirección:</strong><br>
+            Los Aromos #2485, Alto Hospicio
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.servicio-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 193, 7, 0.2) !important;
+}
+
+.servicio-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(255, 193, 7, 0.2) !important;
+}
+
+.carousel-img {
+  border-radius: 12px;
+}
+
+.hero {
+  position: relative;
+}
+
+.servicio-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.servicio-card ul li {
+  padding: 3px 0;
+  position: relative;
+  padding-left: 20px;
+}
+
+.servicio-card ul li:before {
+  content: "✓";
+  color: #ffc107;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Estilos para la sección de clientes */
+.cliente-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.cliente-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 193, 7, 0.2);
+  border-color: #ffc107 !important;
+}
+
+.cliente-img {
+  transition: transform 0.3s ease;
+}
+
+.cliente-card:hover .cliente-img {
+  transform: scale(1.05);
+}
+
+/* Mejoras de accesibilidad para el carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+</style>
+{% endblock %}

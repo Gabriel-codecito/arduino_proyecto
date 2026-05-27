@@ -1,0 +1,15 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% block content %}
+    <h3>Agregar comentario</h3>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="comentario" class="form-control"></textarea>
+        <button class="btn btn-warning mt-3" type="submit">Guardar</button>
+    </form>
+{% endblock %}

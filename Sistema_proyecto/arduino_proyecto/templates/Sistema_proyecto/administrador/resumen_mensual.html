@@ -1,0 +1,125 @@
+
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen Mensual de Energía</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #ffcc00;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .sub-text {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .metric-box {
+            width: 30%;
+            background: #fff7cc;
+            border-left: 6px solid #ffcc00;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #ffcc00;
+            color: #000;
+            padding: 12px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background: #fff3c1;
+        }
+    </style>
+</head>
+<body>
+    <h1> Resumen Mensual de Energía</h1>
+    <p class="sub-text">Periodo desde: <b>{{ inicio_mes|date:"d/m/Y H:i" }}</b></p>
+    <div class="card">
+        <h2> Totales del Mes</h2>
+        <div class="metrics">
+            <div class="metric-box">
+                <p>Energía Total</p>
+                <p class="metric-number">{{ total_energia }} kWh</p>
+            </div>
+            <div class="metric-box">
+                <p>Costo Total</p>
+                <p class="metric-number">${{ total_costo }} CLP</p>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h2> Detalle por Sensor</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sensor</th>
+                    <th>Energía (kWh)</th>
+                    <th>Costo (CLP)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in detalle_sensores %}
+                <tr>
+                    <td>{{ item.sensor }}</td>
+                    <td>{{ item.energia }}</td>
+                    <td>${{ item.costo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Servicios Integrales | P&U INGENIERÍAS{% endblock %}
+{% block content %}
+<section class="servicios-section py-5" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+  <div class="container text-light">
+    <div class="text-center mb-5">
+      <h1 class="fw-bold text-warning mb-3">Servicios Integrales Industriales</h1>
+      <p class="lead text-white">
+        En <b class="text-warning">P&U INGENIERÍAS E.I.R.L</b> ofrecemos soluciones completas con tecnología avanzada 
+        y compromiso con el medio ambiente.
+      </p>
+    </div>
+
+    <!-- Granallado Ecológico PUING 13H2O -->
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6">
+        <img src="{% static 'css/img/image_servicio_integrales.png' %}" 
+             alt="Granallado Ecológico PUING 13H2O" 
+             class="img-fluid rounded shadow-lg border border-warning servicio-imagen">
+      </div>
+      <div class="col-md-6">
+        <div class="servicio-card p-4 bg-dark rounded">
+          <h4 class="fw-bold text-warning mb-3">
+            <i class="fas fa-leaf me-2"></i>Granallado Ecológico PUING 13H₂O
+          </h4>
+          <p class="mb-3 text-white">
+            Sistema portátil de limpieza industrial con <b>abrasivos ecológicos libres de sílice</b>. 
+            Proceso no invasivo, no ruidoso y respetuoso con el medio ambiente.
+          </p>
+          <ul class="mb-4 text-white">
+            <li>Eliminación de corrosión, pintura y óxido</li>
+            <li>Limpieza de acero inoxidable, aluminio, bronce</li>
+            <li>Remoción de grafitis y restauraciones</li>
+            <li>Preparación de superficies de concreto</li>
+            <li>Eliminación de lubricantes y grasas</li>
+            <li>Limpieza de estructuras para paneles solares</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'cotizacion_crear' %}?servicio=Granallado Ecológico PUING 13H₂O" class="btn btn-warning text-dark fw-bold">
+              <i class="fa-solid fa-paper-plane me-2"></i>Solicitar Servicio
+            </a>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Limpieza y Recuperación de Fachadas -->
+    <div class="row align-items-center mb-5 flex-md-row-reverse">
+      <div class="col-md-6">
+        
+      </div>
+      <div class="col-md-6">
+        <div class="servicio-card p-4 bg-dark rounded">
+          <h4 class="fw-bold text-warning mb-3">
+            <i class="fas fa-building me-2"></i>Limpieza y Recuperación de Fachadas
+          </h4>
+          <p class="mb-3 text-white">
+            Especialistas en limpieza de todo tipo de piedra natural y artificial, granito, mármol, 
+            ladrillos y estructuras metálicas.
+          </p>
+          <ul class="mb-4 text-white">
+            <li>Limpieza de superposiciones de hollín (smog)</li>
+            <li>Remoción de graffiti y escritos vandálicos</li>
+            <li>Limpieza de salpicaduras y mortero</li>
+            <li>Eliminación de algas, musgos y líquenes</li>
+            <li>Preparación de superficies para revoques</li>
+            <li>Mantenimiento de la pátina natural en obras antiguas</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'cotizacion_crear' %}?servicio=Limpieza y Recuperación de Fachadas" class="btn btn-warning text-dark fw-bold">
+              <i class="fa-solid fa-paper-plane me-2"></i>Solicitar Servicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Procesos Metales y Preparación -->
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6">
+        <img src="{% static 'css/img/image_descontaminacion.png' %}" 
+             alt="Procesos Metales y Preparación" 
+             class="img-fluid rounded shadow-lg border border-warning servicio-imagen">
+      </div>
+      <div class="col-md-6">
+        <div class="servicio-card p-4 bg-dark rounded">
+          <h4 class="fw-bold text-warning mb-3">
+            <i class="fas fa-industry me-2"></i>Procesos Metales y Preparación
+          </h4>
+          <p class="mb-3 text-white">
+            Preparación profesional de superficies metálicas para diversos tratamientos 
+            y aplicaciones industriales.
+          </p>
+          <ul class="mb-4 text-white">
+            <li>Limpieza y preparación de materiales ferrosos</li>
+            <li>Eliminación de herrumbre en planchas y cañerías</li>
+            <li>Preparación de estructuras oxidadas de acero inoxidable</li>
+            <li>Ligado y cepillado mediante arenado</li>
+            <li>Desengrase de piezas y componentes</li>
+            <li>Reparación de defectos de pintura</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'cotizacion_crear' %}?servicio=Procesos Metales y Preparación" class="btn btn-warning text-dark fw-bold">
+              <i class="fa-solid fa-paper-plane me-2"></i>Solicitar Servicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descontaminación Post-Incendio -->
+    <div class="row align-items-center mb-5 flex-md-row-reverse">
+      <div class="col-md-6">
+        
+      </div>
+      <div class="col-md-6">
+        <div class="servicio-card p-4 bg-dark rounded">
+          <h4 class="fw-bold text-warning mb-3">
+            <i class="fas fa-fire-extinguisher me-2"></i>Descontaminación Post-Incendio
+          </h4>
+          <p class="mb-3 text-white">
+            Servicio especializado en limpieza y descontaminación después de incendios, 
+            garantizando la seguridad y recuperación de instalaciones.
+          </p>
+          <ul class="mb-4 text-white">
+            <li>Limpieza de canaletas porta-cables</li>
+            <li>Descontaminación de tuberías y ductos</li>
+            <li>Eliminación de hollín y residuos de combustión</li>
+            <li>Limpieza de piezas y equipos afectados</li>
+            <li>Preparación de superficies para reconstrucción</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'cotizacion_crear' %}?servicio=Descontaminación Post-Incendio" class="btn btn-warning text-dark fw-bold">
+              <i class="fa-solid fa-paper-plane me-2"></i>Solicitar Servicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eliminación de Rebabas -->
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6">
+        <img src="{% static 'css/img/image_rebabas.png' %}" 
+             alt="Eliminación de Rebabas" 
+             class="img-fluid rounded shadow-lg border border-warning servicio-imagen">
+      </div>
+      <div class="col-md-6">
+        <div class="servicio-card p-4 bg-dark rounded">
+          <h4 class="fw-bold text-warning mb-3">
+            <i class="fas fa-tools me-2"></i>Eliminación de Rebabas y Preparación
+          </h4>
+          <p class="mb-3 text-white">
+            Preparación profesional de aristas y superficies para garantizar la perfecta 
+            cobertura de revestimientos en polvo.
+          </p>
+          <ul class="mb-4 text-white">
+            <li>Eliminación de rebabas de aristas vivas</li>
+            <li>Preparación para revestimientos en polvo</li>
+            <li>Acabado profesional de piezas metálicas</li>
+            <li>Mejora de la adherencia de pinturas</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'cotizacion_crear' %}?servicio=Eliminación de Rebabas y Preparación" class="btn btn-warning text-dark fw-bold">
+              <i class="fa-solid fa-paper-plane me-2"></i>Solicitar Servicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Documentación -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card bg-dark border-warning">
+          <div class="card-header bg-warning text-dark">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-download me-2"></i>
+              Documentación Técnica Completa
+            </h4>
+          </div>
+          <div class="card-body">
+            <p class="text-white mb-4">
+              Descarga nuestra documentación completa para conocer especificaciones técnicas, 
+              casos de éxito y normativas aplicables a nuestros servicios.
+            </p>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="card bg-secondary text-white h-100 border-light">
+                  <div class="card-body text-center">
+                    <i class="fas fa-file-pdf fa-3x text-warning mb-3"></i>
+                    <h5 class="text-warning">Granallado Ecológico PUING 13H₂O</h5>
+                    <p class="small text-white">
+                      Especificaciones técnicas completas del sistema de granallado ecológico
+                    </p>
+                  </div>
+                  <div class="card-footer bg-transparent">
+                    <a href="{% static 'pdf/Servicio_granallado_PUING13_H2O.pdf' %}" 
+                       class="btn btn-warning w-100 text-dark fw-bold"
+                       target="_blank"
+                       download>
+                      <i class="fas fa-download me-2"></i>
+                      Descargar PDF
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div class="card bg-secondary text-white h-100 border-light">
+                  <div class="card-body text-center">
+                    <i class="fas fa-file-alt fa-3x text-warning mb-3"></i>
+                    <h5 class="text-warning">Certificaciones y Normativas</h5>
+                    <p class="small text-white">
+                      Normativas ambientales y de seguridad aplicables a nuestros servicios
+                    </p>
+                  </div>
+                  <div class="card-footer bg-transparent">
+                    <a href="{% static 'pdf/normativas_ambientales.pdf' %}" 
+                       class="btn btn-warning w-100 text-dark fw-bold"
+                       target="_blank"
+                       download>
+                      <i class="fas fa-download me-2"></i>
+                      Descargar PDF
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información de Contacto -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card bg-warning text-dark">
+          <div class="card-body text-center">
+            <h4 class="fw-bold mb-3">¿Necesita asesoría técnica especializada?</h4>
+            <p class="mb-3 text-dark">
+              Contáctenos para una evaluación sin compromiso de sus necesidades industriales
+            </p>
+            <div class="row text-dark">
+              <div class="col-md-4 mb-2">
+                <i class="fas fa-phone me-2"></i>
+                <strong>Teléfonos:</strong><br>
+                +56 57 2490167<br>
+                +56 996778357
+              </div>
+              <div class="col-md-4 mb-2">
+                <i class="fas fa-envelope me-2"></i>
+                <strong>Email:</strong><br>
+                puingenierias@gmail.com
+              </div>
+              <div class="col-md-4 mb-2">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                <strong>Dirección:</strong><br>
+                Los Aromos #2485, Alto Hospicio
+              </div>
+            </div>
+            <a href="{% url 'cotizacion_crear' %}" class="btn btn-dark btn-lg mt-3">
+              <i class="fa-solid fa-paper-plane me-2"></i>Solicitar Cotización
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.servicio-card {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servicio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 193, 7, 0.2);
+}
+
+.servicio-imagen {
+  transition: transform 0.3s ease;
+  height: 300px;
+  object-fit: cover;
+}
+
+.servicio-imagen:hover {
+  transform: scale(1.02);
+}
+
+.servicio-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.servicio-card ul li {
+  padding: 5px 0;
+  position: relative;
+  padding-left: 25px;
+}
+
+.servicio-card ul li:before {
+  content: "✓";
+  color: #ffc107;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 193, 7, 0.2);
+}
+</style>
+{% endblock %}

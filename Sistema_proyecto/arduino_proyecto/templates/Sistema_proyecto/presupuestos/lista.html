@@ -1,0 +1,125 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% load humanize %}
+{% load formato_chile %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block title %}Presupuestos | PUIngenierías{% endblock %}
+
+{% block content %}
+
+<style>
+    .tabla-estilo table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .tabla-estilo thead th {
+        background: rgba(0, 0, 0, 0.4) !important;
+        color: #ffcc00 !important;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    .tabla-estilo tbody tr:hover {
+        background-color: rgba(255, 204, 0, 0.12) !important;
+        transition: 0.25s;
+    }
+
+    .tabla-estilo td {
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+    .btn-ver {
+        border: 1px solid #ffcc00;
+        color: #ffcc00;
+        transition: 0.2s;
+    }
+
+    .btn-ver:hover {
+        background: #ffcc00;
+        color: #000;
+        transform: scale(1.05);
+    }
+</style>
+
+<section class="home-admin py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold text-warning mb-4">Presupuestos Registrados</h2>
+
+        <div class="table-responsive tabla-estilo mx-auto" style="max-width: 900px;">
+            <table class="table table-dark table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Servicio</th>
+                        <th>Monto Estimado</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                        
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for p in presupuestos %}
+                    <tr>
+                        <td>#{{ p.id }}</td>
+                        <td>{{ p.cliente }}</td>
+                        <td>{{ p.servicio }}</td>
+                        <td>{{ p.monto_estimado|peso_chileno }}</td>
+                        <td>{{ p.fecha|date:"d-m-Y H:i" }}</td>
+                        <td>
+                            {% if p.estado == "pendiente" %}
+                                <span class="text-warning fw-bold">Pendiente</span>
+                            {% elif p.estado == "aceptado" %}
+                                <span class="text-success fw-bold">Aceptado</span>
+                            {% elif p.estado == "rechazado" %}
+                                <span class="text-danger fw-bold">Rechazado</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{% url 'detalle_presupuesto' p.id %}" class="btn btn-sm btn-ver px-3">
+                                    Ver
+                                </a>
+
+                                <a href="{% url 'presupuesto_reenviar' p.id %}" 
+                                class="btn btn-sm btn-outline-warning px-3">
+                                    Reenviar
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-3">
+                            No hay presupuestos registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+
+              
+
+            </table>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Detalle del Presupuesto{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .oc-card {
+        background: rgba(20, 20, 20, 0.9);
+        padding: 30px;
+        border-radius: 18px;
+        max-width: 550px;
+        margin: auto;
+        box-shadow: 0 0 25px rgba(0,0,0,0.4);
+        color: white;
+    }
+
+    .oc-label {
+        color: #ffcc00;
+        font-weight: bold;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .oc-value {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+
+    .desc-box {
+        background: rgba(255,255,255,0.1);
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        margin-top: 5px;
+        min-height: 60px;
+        white-space: pre-wrap; /* respeta saltos de línea */
+        text-align: left;
+    }
+</style>
+
+
+<section class="home-admin py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold text-warning mb-4">
+            Presupuesto N° {{ presupuesto.cotizacion.id }}
+        </h2>
+
+        <div class="oc-card">
+
+            <div class="text-start">
+
+                <span class="oc-label">Cliente:</span>
+                <div class="oc-value">{{ presupuesto.cliente }}</div>
+
+                <span class="oc-label">Servicio:</span>
+                <div class="oc-value">{{ presupuesto.servicio }}</div>
+
+                <span class="oc-label">Fecha:</span>
+                <div class="oc-value">{{ presupuesto.fecha|date:"d-m-Y H:i" }}</div>
+
+                <span class="oc-label">Descripción:</span>
+                <div class="desc-box">{{ presupuesto.descripcion }}</div>
+
+                <span class="oc-label mt-3">Monto Estimado:</span>
+                <div class="oc-value">${{ presupuesto.monto_estimado|floatformat:0 }}</div>
+
+            </div>
+
+            <!-- BOTONES -->
+            <div class="text-center mt-4">
+                <a href="{% url 'editar_presupuesto' presupuesto.id %}" class="btn btn-warning px-4">
+                    Editar
+                </a>
+                <a href="{% url 'lista_presupuestos' %}" class="btn px-4" style="background:#5a5a5a; color:white;">
+                    Volver
+                </a>
+                {% if presupuesto.estado == "aceptado" %}
+                    <a href="{% url 'crear_oc' presupuesto.id %}" class="btn btn-warning" >
+                        Crear Orden de Compra
+                    </a>
+                {% endif %}
+                {% if presupuesto.estado == "aceptado" and not presupuesto.ordencompra_set.exists %}
+                    <a href="{% url 'crear_oc' presupuesto.id %}"  class="btn px-4" style="background:#ffcc00;">Crear Orden de Compra</a>
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

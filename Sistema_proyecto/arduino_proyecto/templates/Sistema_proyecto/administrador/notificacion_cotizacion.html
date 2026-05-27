@@ -1,0 +1,32 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+<div style="font-family: Arial; padding: 20px;">
+    <h2 style="color:#d4af37;">Actualización de tu cotización</h2>
+
+    <p>Hola <strong>{{ nombre }}</strong>,</p>
+
+    <p>
+        Tu cotización referente a:  
+        <strong>{{ servicio }}</strong>
+    </p>
+
+    <p>
+        Ha cambiado su estado a:  
+        {% if estado == "aprobada" %}
+            <span style="color:green; font-weight: bold;">Aprobada </span>
+        {% elif estado == "rechazada" %}
+            <span style="color:red; font-weight: bold;">Rechazada </span>
+        {% endif %}
+    </p>
+
+    <p>
+        Cualquier duda o consulta puedes responder este correo.
+    </p>
+
+    <br>
+    <p>Saludos cordiales,</p>
+    <strong>P&U Ingenierías</strong>
+</div>

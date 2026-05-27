@@ -1,0 +1,150 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(to bottom, #004e92, #000428);
+        text-align: center;
+        padding-top: 60px;
+        color: white;
+        margin: 0;
+    }
+
+    form {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px 45px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        width: 360px;
+        text-align: left;
+    }
+
+    label {
+        margin-top: 12px;
+        color: #f5f5f5;
+        font-size: 14px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #000;
+    }
+
+    button {
+        background-color: #ffd633;
+        color: #000;
+        border: none;
+        padding: 12px;
+        margin-top: 20px;
+        width: 100%;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background-color: #ffcc00;
+    }
+
+    .error {
+        color: #ff6666;
+        font-size: 14px;
+        background: rgba(255, 0, 0, 0.15);
+        padding: 8px;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+</style>
+
+<h2 class="fw-bold mb-4">Registrar Administradora</h2>
+
+<form method="POST"action="{% url 'registro' %}">
+    {% csrf_token %}
+
+    <label>RUT:</label>
+    <div style="display: flex; gap: 10px;">
+        <input type="text" id="rut" name="rut" placeholder="12345678"
+               style="flex: 3;" oninput="calcularDVdesdeInput()" required>
+
+        <input type="text" id="dv" placeholder="DV"
+               style="flex: 1; text-align:center;" disabled>
+
+        <input type="hidden" id="dv_hidden" name="dv">
+    </div>
+
+    <label>Nombre de usuario:</label>
+    <input type="text" name="username" required>
+
+    <label>Teléfono:</label>
+    <input type="text" name="telefono">
+
+    <label>Contraseña:</label>
+    <input type="password" name="password" required>
+
+    <label>Confirmar contraseña:</label>
+    <input type="password" name="password2" required>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="error">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <button type="submit">Registrar</button>
+
+</form>
+
+<script>
+function calcularDVdesdeInput() {
+    const rutInput = document.getElementById('rut');
+    const dvDisplay = document.getElementById('dv');
+    const dvHidden = document.getElementById('dv_hidden');
+    
+    let rut = rutInput.value.replace(/\./g, '').replace(/-/g, '');
+    
+    if (rut.length >= 7) {
+        let dvCalculado = calcularDigitoVerificador(rut);
+        dvDisplay.value = dvCalculado;
+        dvHidden.value = dvCalculado;
+    } else {
+        dvDisplay.value = '';
+        dvHidden.value = '';
+    }
+}
+
+function calcularDigitoVerificador(rut) {
+    let suma = 0;
+    let multiplicador = 2;
+
+    for (let i = rut.length - 1; i >= 0; i--) {
+        suma += parseInt(rut.charAt(i)) * multiplicador;
+        multiplicador++;
+        if (multiplicador > 7) multiplicador = 2;
+    }
+
+    let resto = suma % 11;
+    let dv = 11 - resto;
+
+    if (dv === 11) return "0";
+    if (dv === 10) return "K";
+    return dv.toString();
+}
+</script>
+
+{% endblock %}

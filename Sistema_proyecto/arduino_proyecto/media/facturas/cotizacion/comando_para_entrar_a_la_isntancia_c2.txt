@@ -1,0 +1,30 @@
+ssh -i "linux.pem" ec2-user@ip-publica
+
+cd /var/www/html
+ls -l
+
+sudo systemctl start httpd
+sudo systemctl status httpd
+sudo systemctl enable httpd
+
+mysql -u yanyn -p
+12345
+USE netflix;
+SHOW TABLES;
+SELECT * FROM prueba;
+DELETE FROM prueba WHERE id = 1;
+
+CREATE TABLE prueba(id INT AUTO_INCREMENT PRIMARY_KEY, correo varchar(100) NOT NULL, password varchar(100) NOT NULL);
+
+INSERT INTO prueba (correo, password) VALUES ('ejemplo@gmail.com','1234');
+
+SELECT * FROM prueba;
+SELECT * FROM prueba WHERE id= 1;
+
+UPDATE prueba SET correo='nuevoejemplo@gmail.com' WHERE id = 1;
+
+UPDATE prueba SET password='nuevaclave' WHERE id = 1;
+
+DELETE FROM prueba WHERE id = 1;
+
+DELETE FROM prueba;

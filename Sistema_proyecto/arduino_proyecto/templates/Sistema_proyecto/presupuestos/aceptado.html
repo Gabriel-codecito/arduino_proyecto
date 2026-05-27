@@ -1,0 +1,123 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+
+{% block title %}Presupuesto Aceptado{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Fondo suave con gradiente corporativo */
+    .presupuesto-aceptado-bg {
+        background: linear-gradient(135deg, #002a5c 0%, #003f87 100%);
+        min-height: 100vh;
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    /* Tarjeta premium */
+    .card-premium {
+        max-width: 650px;
+        background: rgba(0, 0, 0, 0.75);
+        border-radius: 22px;
+        padding: 40px;
+        border: 1px solid rgba(255, 204, 0, 0.4);
+        box-shadow: 0 0 25px rgba(255, 204, 0, 0.25),
+                    0 0 50px rgba(0, 0, 0, 0.6);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Icono check animado */
+    .check-icon {
+        font-size: 70px;
+        color: #00e676;
+        text-shadow: 0 0 12px #00e676;
+        animation: popIn 0.5s ease-out;
+    }
+
+    /* Título */
+    .titulo-premium {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #00e676;
+        text-shadow: 0 0 10px rgba(0, 255, 120, 0.7);
+        margin-bottom: 10px;
+    }
+
+    /* Texto */
+    .texto-premium {
+        color: #d6d6d6;
+        font-size: 1.15rem;
+        line-height: 1.6;
+    }
+
+    /* Botón premium */
+    .btn-premium {
+        background: #ffcc00;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #002a5c;
+        border-radius: 10px;
+        transition: 0.3s;
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+    }
+
+    .btn-premium:hover {
+        background: #ffd633;
+        transform: translateY(-3px);
+        box-shadow: 0 0 18px rgba(255, 220, 70, 0.9);
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0.3); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="presupuesto-aceptado-bg">
+
+    <div class="container d-flex justify-content-center">
+        <div class="card-premium text-center">
+
+            <div class="mb-3">
+                <i class="bi bi-check-circle-fill check-icon"></i>
+            </div>
+
+            <h2 class="titulo-premium">
+                Presupuesto Aceptado
+            </h2>
+
+            <p class="texto-premium mt-3">
+                Tu presupuesto 
+                <strong class="text-warning">#{{ presupuesto.id }}</strong>
+                ha sido aceptado exitosamente.
+            </p>
+
+            <p class="texto-premium mt-2">
+                Nuestro equipo se pondrá en contacto contigo
+                para iniciar el trabajo.  
+                ¡Gracias por confiar en 
+                <span class="text-warning fw-bold">
+                    P&U Ingenierías
+                </span>!
+            </p>
+
+            
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,232 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Solicitar Cotización | Puingenierías{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+{% block content %}
+<style>
+  /* ESTILOS PREMIUM DORADO */
+  .premium-title {
+    background: linear-gradient(135deg, #f7ef8a 0%, #d4af37 50%, #b8941f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+  }
+
+  .premium-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .premium-label {
+    color: #d4af37;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .premium-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    color: #fff;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .premium-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .premium-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #d4af37;
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+    color: #fff;
+    outline: none;
+  }
+
+  .premium-input:hover {
+    border-color: rgba(212, 175, 55, 0.6);
+  }
+
+  .premium-textarea {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    color: #fff;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .premium-textarea:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #d4af37;
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+    color: #fff;
+    outline: none;
+  }
+
+  .premium-file-upload {
+    background: linear-gradient(135deg, #f7ef8a 0%, #d4af37 100%);
+    border: none;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    height: 48px;
+  }
+
+  .premium-file-upload:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, #f8f2a0 0%, #e0bf4a 100%);
+  }
+
+  .premium-btn {
+    background: linear-gradient(135deg, #f7ef8a 0%, #d4af37 100%);
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  }
+
+  .premium-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    background: linear-gradient(135deg, #f8f2a0 0%, #e0bf4a 100%);
+    color: #000;
+  }
+
+  .section-desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  #archivo {
+    display: none;
+  }
+
+  .file-icon {
+    margin-right: 8px;
+  }
+</style>
+
+<section class="cotizacion-section py-5">
+  <div class="container text-light">
+
+    <!-- TÍTULO -->
+    <div class="text-center mb-5">
+      <h2 class="premium-title display-6 fw-bold mb-3">Solicitar Cotización</h2>
+      <p class="section-desc">
+        Cuéntanos qué necesitas y te enviaremos una propuesta personalizada.
+      </p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="premium-card p-4 p-md-5 mx-auto" style="max-width: 900px;">
+
+      <form method="POST" action="{% url 'cotizacion_crear' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+          {% if form.errors %}
+        <div style="background:red; color:white; padding:10px; margin:10px 0;">
+            <strong>ERRORES:</strong> {{ form.errors }}
+        </div>
+        {% endif %}
+
+        {% if messages %}
+        {% for message in messages %}
+        <div style="background:orange; color:white; padding:10px; margin:10px 0;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+      <div class="row g-4">
+
+        <div class="col-md-6">
+          <label class="premium-label">Nombre</label>
+          {{ form.nombre }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="premium-label">Empresa</label>
+          {{ form.empresa }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="premium-label">Correo</label>
+          {{ form.correo }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="premium-label">Teléfono</label>
+          {{ form.telefono }}
+        </div>
+
+        <div class="col-md-12">
+          <label class="premium-label">Servicio</label>
+          {{ form.servicio }}
+        </div>
+
+        <div class="col-12">
+          <label class="premium-label">Descripción</label>
+          {{ form.descripcion }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="premium-label">Archivo</label>
+          {{ form.archivo }}
+          <small id="archivo-texto">Seleccionar archivo</small>
+        </div>
+
+        <div class="col-12 text-center mt-4">
+          <button type="submit" class="premium-btn">
+            Enviar Solicitud
+          </button>
+        </div>
+
+      </div>
+    </form>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputArchivo = document.getElementById("archivo");
+
+        if (inputArchivo) {
+            inputArchivo.addEventListener("change", function(){
+                const texto = document.getElementById("archivo-texto");
+                if (texto) {
+                    texto.textContent = this.files.length 
+                        ? this.files[0].name 
+                        : "Seleccionar archivo";
+                }
+            });
+        }
+    });
+    </script>
+{% endblock %}

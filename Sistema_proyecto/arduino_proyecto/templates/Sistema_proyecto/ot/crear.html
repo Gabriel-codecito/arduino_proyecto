@@ -1,0 +1,160 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Crear Orden de Trabajo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .form-ot-container {
+        max-width: 780px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    }
+
+    .form-ot-container label {
+        color: #ffcc00;
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .data-box {
+        background: rgba(255,255,255,0.08);
+        border-left: 4px solid #ffcc00;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .alert-box-iot {
+        background: rgba(255,0,0,0.15);
+        padding: 12px;
+        margin-top: 12px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+
+    .btn-ot {
+        background-color: #ffcc00;
+        border: none;
+        padding: 12px 20px;
+        font-weight: bold;
+        border-radius: 10px;
+        transition: 0.2s;
+    }
+
+    .btn-ot:hover {
+        background-color: #e6b800;
+        transform: scale(1.03);
+    }
+
+    /* Vista previa del estado */
+    #estado-preview {
+        margin-top: 4px;
+        font-weight: bold;
+    }
+</style>
+
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-warning mb-4 text-center">Crear Orden de Trabajo</h2>
+
+        <!-- RESUMEN DEL PRESUPUESTO ASOCIADO -->
+        <div class="data-box">
+            <h5 class="text-warning mb-2">Resumen del Presupuesto Asociado</h5>
+            <p class="text-light mb-1"><strong>ID Presupuesto:</strong> {{ presupuesto.id }}</p>
+            <p class="text-light mb-1"><strong>Cliente:</strong> {{ presupuesto.cotizacion.nombre }}</p>
+            <p class="text-light mb-1"><strong>Empresa:</strong> {{ presupuesto.cotizacion.empresa }}</p>
+            <p class="text-light mb-1"><strong>Monto Total:</strong> ${{ presupuesto.total_final }}</p>
+        </div>
+
+        <!-- ALERTAS IOT RECIENTES (si existen) -->
+        {% if alertas_recientes %}
+        <div class="alert-box-iot">
+            <h6 class="text-danger fw-bold">Alertas IoT recientes</h6>
+            <ul class="text-light mb-1">
+                {% for a in alertas_recientes %}
+                <li>{{ a.fecha|date:"d-m-Y H:i" }} — {{ a.mensaje }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- FORMULARIO DE OT -->
+        <div class="form-ot-container mt-4">
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <small class="text-danger">{{ field.errors }}</small>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <!-- Vista previa del estado -->
+                <div id="estado-preview"></div>
+
+                <!-- Medidas de seguridad -->
+                <div class="mb-3">
+                    <label>Medidas de Seguridad</label>
+                    <textarea name="seguridad" rows="3" placeholder="Ej: Usar EPP, revisar vibración del motor, cortar energía antes de operar..." class="form-control"></textarea>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn-ot">Crear OT</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<!-- Script para vista previa del estado -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const select = document.querySelector(".estado-select");
+    const preview = document.getElementById("estado-preview");
+
+    if (select) {
+        const colores = {
+            pendiente: "#ffc107",
+            asignada: "#0d6efd",
+            en_proceso: "#17a2b8",
+            finalizada: "#28a745",
+            entregada: "#6610f2",
+        };
+
+        function actualizarPreview() {
+            const valor = select.value;
+            preview.textContent = "Estado seleccionado: " + valor.toUpperCase();
+            preview.style.color = colores[valor];
+        }
+
+        select.addEventListener("change", actualizarPreview);
+        actualizarPreview();
+    }
+});
+</script>
+
+{% endblock %}

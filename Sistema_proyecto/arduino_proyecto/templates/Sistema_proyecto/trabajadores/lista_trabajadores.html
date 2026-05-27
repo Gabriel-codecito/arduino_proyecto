@@ -1,0 +1,54 @@
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-warning fw-bold">Trabajadores</h2>
+        <a href="{% url 'crear_trabajador' %}" class="btn btn-primary">+ Nuevo Trabajador</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-warning">Nombre</th>
+                <th class="text-warning">Correo</th>
+                <th class="text-warning">Teléfono</th>
+                <th class="text-warning">Herramientas</th>
+                <th class="text-warning">Disponibilidad</th>
+                <th class="text-warning">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trabajador in trabajadores %}
+            <tr>
+                <td>{{ trabajador.nombre }}</td>
+                <td>{{ trabajador.correo }}</td>
+                <td>{{ trabajador.telefono|default:"—" }}</td>
+                <td>
+                    {% for h in trabajador.herramientas.all %}
+                        <span class="badge bg-secondary">{{ h.nombre }}</span>
+                    {% empty %}
+                        Sin herramientas
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if trabajador.disponible %}
+                        <span class="badge bg-success">Disponible</span>
+                    {% else %}
+                        <span class="badge bg-danger">No disponible</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'disponibilidad_trabajador' trabajador.pk %}" class="btn btn-sm btn-warning">Disponibilidad</a>
+                    <a href="{% url 'editar_trabajador' trabajador.pk %}" class="btn btn-sm btn-info">Editar</a>
+                    <a href="{% url 'eliminar_trabajador' trabajador.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center text-light">No hay trabajadores registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Mediciones | Puingenierías{% endblock %}
+{% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+  <div class="container text-center mt-4">
+    <h2> Mediciones</h2>
+    <p>Visualiza el nivel de consumo energético registrado por fecha.</p>
+    {% if metabase_iframe_url %}
+      <div class="container mt-4 text-center">
+        <iframe src="http://127.0.0.1:3000/public/dashboard/85fcc709-a782-43b4-84d6-f0a8f7acf0b3"
+                style="width:100%;height:100vh;border:none;">
+        </iframe>
+      </div>
+      {% else %}
+      <div class="alert alert-warning mt-3">
+           No se pudo generar la URL de Metabase.
+      </div>
+      {% endif %}
+        </table>
+  </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'home_admin' %}" class="btn btn-warning text-dark fw-bold px-4 py-2"> Volver al Panel</a>
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}
+
+

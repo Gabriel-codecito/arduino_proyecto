@@ -1,0 +1,13 @@
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>¿Eliminar a {{ object.nombre }}?</h2>
+    <p>Esta acción no se puede deshacer.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="{% url 'lista_trabajadores' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

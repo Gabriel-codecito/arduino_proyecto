@@ -1,0 +1,138 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Detalle de Cotizaciones | Puingenierías{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+{% block content %}
+<style>
+.detalle-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.detalle-item {
+    margin-bottom: 20px;
+}
+
+.detalle-item h5 {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+.estado-pendiente { color: #ffcc00; font-weight: bold; }
+.estado-finalizada { color: #28a745; font-weight: bold; }
+.estado-revision { color: #dc3545; font-weight: bold; }
+</style>
+<section class="py-4 text-light">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-warning">Detalle de Cotización #{{ cotizacion.id }}</h2>
+            <p class="text-light-50">Información completa enviada por el cliente.</p>
+        </div>
+        <div class="detalle-container">
+            <!-- CORREGIDO: usar cotizacion.nombre en lugar de cotizacion.usuario -->
+            <div class="detalle-item">
+                <h5>Nombre</h5>
+                <p>{{ cotizacion.nombre }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item">
+                <h5>Correo</h5>
+                <p>{{ cotizacion.correo }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item">
+                <h5>Teléfono</h5>
+                <p>{{ cotizacion.telefono|default:"No especificado" }}</p>
+            </div>
+            <hr>
+
+            <div class="detalle-item">
+                <h5>Empresa</h5>
+                <p>{{ cotizacion.empresa|default:"No especificado" }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item">
+                <h5>Servicio</h5>
+                <p>{{ cotizacion.servicio }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item">
+                <h5>Descripción</h5>
+                <p>{{ cotizacion.descripcion }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item">
+                <h5>Fecha de entrega solicitada</h5>
+                <p>{{ cotizacion.fecha_entrega|date:"d/m/Y" }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item mb-4">
+                <h5>Fecha de creación</h5>
+                <p class="text-light fs-5">{{ cotizacion.creado|date:"d/m/Y H:i" }}</p>
+            </div>
+            <hr>
+            <div class="detalle-item">
+                <h5>Estado</h5>
+                {% if cotizacion.estado == "pendiente" %}
+                    <p><span class="estado-pendiente"> Pendiente</span></p>
+                {% elif cotizacion.estado == "aprobada" %}
+                    <p><span class="estado-finalizada"> Aprobada</span></p>
+                {% elif cotizacion.estado == "rechazada" %}
+                    <p><span class="estado-revision"> Rechazada</span></p>
+                {% endif %}
+            
+                {% if cotizacion.estado == "pendiente" %}
+                    <div class="mt-3 d-flex gap-2">
+                        <button 
+                            class="btn btn-success fw-bold px-3"
+                            onclick="confirmarAceptar({{ cotizacion.id }})">
+                             Aceptar
+                        </button>
+                        <button 
+                            class="btn btn-danger fw-bold px-3 ms-2"
+                            onclick="confirmarRechazar({{ cotizacion.id }})">
+                             Rechazar
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'cotizacion_admin' %}" class="btn btn-secondary px-4 py-2 fw-bold"style="border-radius: 10px;">
+                Volver a Cotizaciones
+            </a>
+            {% if cotizacion.estado == "aprobada" %}
+                <a href="{% url 'crear_presupuesto' cotizacion.id %}" class="btn btn-warning px-4 py-2 fw-bold"style="border-radius: 10px;">
+                    Crear Presupuesto
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+function confirmarAceptar(id) {
+    if (confirm("¿Estás seguro de ACEPTAR esta cotización?")) {
+        window.location.href = `/administrador/cotizacion/${id}/aceptar/`;
+    }
+}
+function confirmarRechazar(id) {
+    if (confirm("¿Estás seguro de RECHAZAR esta cotización?")) {
+        window.location.href = `/administrador/cotizacion/${id}/rechazar/`;
+    }
+}
+</script>
+{% endblock %}

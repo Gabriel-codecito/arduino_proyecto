@@ -1,0 +1,28 @@
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Trabajador</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            {{ form.nombre }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Correo</label>
+            {{ form.correo }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            {{ form.telefono }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Herramientas</label>
+            {{ form.herramientas }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'lista_trabajadores' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

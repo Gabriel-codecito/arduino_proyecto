@@ -1,0 +1,120 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Crear Factura{% endblock %}
+
+{% block content %}
+
+<style>
+    .factura-card {
+        background: rgba(20, 20, 20, 0.95);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        padding: 35px;
+        max-width: 750px;
+        margin: 0 auto;
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    }
+
+    .form-label {
+        color: #ffcc00 !important;
+        font-weight: 600 !important;
+        margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+        background-color: rgba(255,255,255,0.07) !important;
+        border: 1px solid rgba(255,255,255,0.18) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+        width: 100% !important;
+        transition: 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #ffcc00 !important;
+        box-shadow: 0 0 10px rgba(255,204,0,0.5) !important;
+        transform: scale(1.01);
+    }
+
+    .file-input {
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #ccc;
+    }
+
+    .btn-factura {
+        background-color: #ffcc00 !important;
+        color: black !important;
+        padding: 12px 30px;
+        border-radius: 50px;
+        border: none;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .btn-factura:hover {
+        background-color: #e6b800 !important;
+        transform: scale(1.03);
+    }
+
+    .error-text {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+    }
+</style>
+
+
+<section class="home-admin py-5">
+    <div class="container">
+
+        <!-- Encabezado -->
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-warning">Registrar Nueva Factura</h2>
+            <p class="text-light-50">Complete la información para registrar una nueva factura.</p>
+        </div>
+
+        <!-- Card -->
+        <div class="factura-card">
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+
+                    {% if field.field.widget.input_type == "file" %}
+                        <div class="file-input">
+                            {{ field }}
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="error-text">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="text-center mt-4">
+                    <button class="btn-factura"> Guardar Factura</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

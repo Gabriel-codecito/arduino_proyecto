@@ -1,0 +1,69 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Informe Diario | Puingenierías{% endblock %}
+{% block content %}
+<section class="home-admin text-center py-5">
+  <div class="container">
+    <h2 class="text-warning fw-bold mb-3"> Informe Diario de Consumo Energético</h2>
+    <p class="text-light-50">
+      Intervalo entre <strong>{{ desde|date:"d/m/Y " }}</strong> y 
+      <strong>{{ hasta|date:"d/m/Y " }}</strong>
+    </p>
+    <div class="card-panel p-3 mb-4">
+      <h5 class="text-warning mb-2"> Resumen del periodo</h5>
+      <p class="mb-0">
+        <strong class="text-warning">Total energía consumida:</strong> {{ total_energia|floatformat:3 }} kWh
+      </p>
+    </div>
+    <div class="card-panel p-4">
+      <h5 class="text-warning mb-3">
+        <i class="fa-solid fa-table"></i> Mediciones registradas
+      </h5>
+      <div class="table-responsive" style="max-height: 450px; overflow-y: auto;">
+        <table class="table table-dark table-striped align-middle text-center shadow">
+          <thead style="background-color: #ffcc00; color: #002b5c;">
+            <tr>
+              <th>Fecha</th>
+              <th>Sensor</th>
+              <th>Corriente (A)</th>
+              <th>Voltaje (V)</th>
+              <th>Potencia (W)</th>
+              <th>Energía (kWh)</th>
+              <th>Costo (CLP)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in mediciones %}
+            <tr>
+              <td>{{ m.fecha|date:"d/m/Y H:i" }}</td>
+              <td>{{ m.sensor.nombre }}</td>
+              <td>{{ m.corriente|floatformat:2 }}</td>
+              <td>{{ m.voltaje|floatformat:0 }}</td>
+              <td>{{ m.potencia|floatformat:2 }}</td>
+              <td>{{ m.energia|floatformat:6 }}</td>
+              <td>${{ m.costo|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" class="py-3 text-light-50">
+                 No hay mediciones disponibles para este intervalo.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mt-4 text-center">
+      <a href="{% url 'informe_energia' %}" class="btn btn-warning fw-bold px-4 py-2">
+        <i class="fa-solid fa-arrow-left me-1"></i> Volver al Informe General
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

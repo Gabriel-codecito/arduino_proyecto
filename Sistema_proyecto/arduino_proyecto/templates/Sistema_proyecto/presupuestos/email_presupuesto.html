@@ -1,0 +1,83 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Presupuesto PUIngenierías</title>
+</head>
+
+<body style="margin:0; padding:0; background:#0d1b2a; font-family:Arial, sans-serif;">
+
+    <div style="max-width:650px; margin:auto; padding:25px; background:#1b263b; color:white; border-radius:12px;">
+
+        <h2 style="color:#ffcc00; margin-top:0; text-align:center;">
+            Presupuesto #{{ presupuesto.id }}
+        </h2>
+
+        <p style="font-size:15px; line-height:1.5;">
+            Estimado/a <strong>{{ presupuesto.cliente }}</strong>,<br><br>
+            Hemos generado un presupuesto para tu solicitud. A continuación encontrarás los detalles.
+        </p>
+
+        <div style="background:#0d1b2a; padding:18px; border-radius:10px; border:1px solid #274060; margin-top:20px;">
+
+            <p style="margin:0 0 12px;">
+                <strong style="color:#ffcc00;">Servicio:</strong><br>
+                <span>{{ presupuesto.servicio }}</span>
+            </p>
+
+            <p style="margin:0 0 12px;">
+                <strong style="color:#ffcc00;">Descripción:</strong><br>
+                <span>{{ presupuesto.descripcion }}</span>
+            </p>
+
+            <p style="margin:0;">
+                <strong style="color:#ffcc00;">Monto Estimado:</strong><br>
+                <span style="font-size:18px; font-weight:bold;">
+                    ${{ presupuesto.monto_estimado|floatformat:0|intcomma }}
+                </span>
+            </p>
+        </div>
+
+
+        <div style="text-align:center; margin-top:30px;">
+
+            <a href="{{ aceptar_url }}"
+               style="background:#28a745; 
+                      color:white; 
+                      padding:12px 25px; 
+                      text-decoration:none; 
+                      font-size:16px; 
+                      border-radius:8px; 
+                      margin-right:10px;
+                      display:inline-block;">
+                 Aceptar Presupuesto
+            </a>
+
+            <a href="{{ rechazar_url }}"
+               style="background:#dc3545; 
+                      color:white; 
+                      padding:12px 25px; 
+                      text-decoration:none; 
+                      font-size:16px; 
+                      border-radius:8px;
+                      display:inline-block;">
+                 Rechazar Presupuesto
+            </a>
+        </div>
+
+        <p style="margin-top:35px; font-size:14px; text-align:center; color:#e5e5e5;">
+            Gracias por confiar en <strong style="color:#ffcc00;">P&U Ingenierías</strong>.<br>
+            Nos pondremos en contacto contigo tras tu respuesta.
+        </p>
+
+    </div>
+
+</body>
+</html>

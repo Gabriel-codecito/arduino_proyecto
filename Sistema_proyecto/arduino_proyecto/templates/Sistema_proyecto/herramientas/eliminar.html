@@ -1,0 +1,27 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Eliminar Herramienta{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="home-admin py-5">
+    <div class="container text-center">
+
+        <h3 class="text-danger fw-bold">¿Eliminar herramienta "{{ object.nombre }}"?</h3>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            <button class="btn btn-danger">Eliminar</button>
+            <a href="{% url 'lista_herramientas' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+
+    </div>
+</section>
+{% endblock %}

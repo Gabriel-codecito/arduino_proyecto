@@ -1,0 +1,109 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Lista de Cotizaciones | Panel Admin{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="py-5 text-light">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-warning">Cotizaciones Enviadas</h2>
+            <p class="text-light-50">Visualiza, filtra y administra todas las solicitudes de cotización.</p>
+        </div>
+
+        <div class="tabla-cotizaciones">
+
+            <p class="text-white">Total cotizaciones: {{ cotizaciones|length }}</p>
+
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{% url 'exportar_cotizaciones_pdf' %}" 
+                class="btn btn-warning fw-bold shadow-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> Exportar Cotizaciones (PDF)
+                </a>
+            </div>
+            <table id="tablaCotizaciones" class="table table-dark table-striped table-hover">
+                <thead class="table-warning text-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Producto / Servicio</th>
+                        <th>Archivo</th>
+                        <th>Estado</th>
+                        <th>Fecha Entrega</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for c in cotizaciones %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+
+                        <!-- CLIENTE -->
+                        <td>
+                            {% if c.usuario %}
+                                {{ c.usuario.first_name }} {{ c.usuario.last_name }}
+                            {% else %}
+                                {{ c.nombre }}
+                            {% endif %}
+                        </td>
+
+                        <!-- PRODUCTO / SERVICIO -->
+                        <td>{{ c.servicio }}</td>
+
+                        <!-- ARCHIVO -->
+                        <td>
+                            {% if c.archivo %}
+                                <a class="btn btn-warning btn-sm" href="{{ c.archivo.url }}" target="_blank">Ver archivo</a>
+                            {% else %}
+                                <span class="text-secondary">Sin archivo</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- ESTADO -->
+                        <td>
+                            {% if c.estado == "pendiente" %}
+                                <span class="estado-pendiente">Pendiente</span>
+                            {% elif c.estado == "aprobada" %}
+                                <span class="estado-finalizada">Aprobada</span>
+                            {% elif c.estado == "rechazada" %}
+                                <span class="estado-revision">Rechazada</span>
+                            {% else %}
+                                {{ c.estado }}
+                            {% endif %}
+                        </td>
+
+                        <!-- FECHA -->
+                        <td>
+                            {% if c.fecha_entrega %}
+                                {{ c.fecha_entrega|date:"d-m-Y" }}
+                            {% else %}
+                                <span class="text-light-50">No definida</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- ACCIONES -->
+                        <td>
+                            <a href="{% url 'cotizacion_detalle' c.pk %}" class="btn btn-primary btn-sm">
+                                Ver
+                            </a>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

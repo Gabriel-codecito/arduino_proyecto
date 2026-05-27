@@ -1,0 +1,128 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Registrar Herramienta{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(145deg, #002b5c, #003d7a);
+    }
+
+    .herramienta-card {
+        background: rgba(10,10,10,0.93);
+        border: 1px solid rgba(255,204,0,0.25);
+        border-radius: 18px;
+        padding: 35px;
+        max-width: 820px;
+        margin: 0 auto;
+        box-shadow: 0 0 22px rgba(255,204,0,0.25);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity:0; transform: translateY(20px); }
+        to   { opacity:1; transform: translateY(0); }
+    }
+
+    .form-label {
+        color: #ffcc00 !important;
+        font-weight: 600 !important;
+    }
+
+    input, select, textarea {
+        background-color: rgba(255,255,255,0.08) !important;
+        color: white !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        width: 100% !important;
+    }
+
+    .btn-herramienta {
+        background: #ffcc00 !important;
+        color: #002b5c !important;
+        padding: 14px 40px;
+        border-radius: 50px;
+        font-weight: bold;
+        box-shadow: 0 0 15px rgba(255,204,0,0.7);
+        transition: 0.25s;
+    }
+
+    .btn-herramienta:hover {
+        transform: scale(1.05);
+        background: #ffdd33 !important;
+    }
+
+    .icon-preview {
+        font-size: 55px;
+        color: #ffcc00;
+        margin-bottom: 12px;
+    }
+
+</style>
+
+<section class="home-admin py-5">
+<div class="container">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-warning"><i class="bi bi-tools"></i> Registrar Herramienta</h2>
+        <p class="text-light">Vincule esta herramienta a un sensor IoT para monitoreo automático.</p>
+    </div>
+
+    <div class="herramienta-card">
+
+        <!-- ICONO -->
+        <div class="text-center mb-4">
+            <div id="iconPreview" class="icon-preview">
+                <i class="bi bi-tools"></i>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+
+                <!-- Campo normal -->
+                {% if field.name != "sensor" %}
+                    {{ field }}
+                {% else %}
+                <!-- Campo SENSOR corregido -->
+                    <select name="sensor" class="form-select">
+                        <option value="">--- Seleccione sensor ---</option>
+                        {% for s in field.field.queryset %}
+                            <option value="{{ s.id }}">
+                                Sensor {{ s.id }} — {{ s.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if field.errors %}
+                <p class="text-danger">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="text-center mt-4">
+                <button class="btn-herramienta">Guardar Herramienta</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+</section>
+
+{% endblock %}

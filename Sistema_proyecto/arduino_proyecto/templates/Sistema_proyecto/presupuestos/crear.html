@@ -1,0 +1,267 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% load formato_chile %}
+{% block title %}Crear Presupuesto{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="home-admin py-5" style="min-height: 100vh;">
+
+    <div class="container d-flex justify-content-center">
+
+        <div class="premium-card bg-dark text-light shadow-lg p-5"
+             style="width: 100%; max-width: 700px; border-radius: 22px;">
+
+
+            <!-- ENCABEZADO -->
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-warning" style="font-size: 2rem;">
+                    Presupuesto para Cotización Nº {{ cotizacion.id }}
+                </h2>
+                <p class="text-light-50" style="font-size: 1.05rem;">
+                    Complete la información para generar el presupuesto oficial del cliente.
+                </p>
+            </div>
+
+
+            <!-- BLOQUE DATOS DE COTIZACIÓN -->
+            <div class="glass-box p-4 mb-5">
+                <h5 class="fw-bold text-warning mb-3" style="font-size: 1.2rem; text-align:center;">
+                    Datos de la Cotización
+                </h5>
+
+                <p class="mb-2"><strong class="text-light-50">Cliente:</strong>
+                    <span class="text-light">{{ cotizacion.nombre }}</span>
+                </p>
+                <p class="mb-2"><strong class="text-light-50">Correo:</strong>
+                    <span class="text-light">{{ cotizacion.correo }}</span>
+                </p>
+                <p class="mb-0"><strong class="text-light-50">Servicio Solicitado:</strong>
+                    <span class="text-light">{{ cotizacion.servicio }}</span>
+                </p>
+            </div>
+
+
+            <!-- BLOQUE IoT -->
+            <div class="glass-box p-4 mb-5" style="border-left: 4px solid #ffc107;">
+                <h5 class="fw-bold text-warning mb-3" style="font-size: 1.2rem; text-align:center;">
+                    Consumo Energético Registrado
+                </h5>
+
+                {% if herramienta_seleccionada %}
+                    
+                    <p class="mb-1">
+                         <strong class="text-warning">Herramienta:</strong>
+                        <span class="text-light">{{ herramienta_nombre }}</span>
+                    </p>
+
+                    <p class="mb-1">
+                         <strong class="text-warning">Energía total medida:</strong>
+                        <span class="text-light">{{ energia_total|floatformat:4 }} kWh</span>
+                    </p>
+
+                    <p class="mb-1">
+                         <strong class="text-warning">Costo energético estimado:</strong>
+                        <span class="text-light">$ {{ costo_energia|floatformat:2 }} CLP</span>
+                    </p>
+
+                {% else %}
+                    <p class="text-light-50 text-center">
+                        No se seleccionó una herramienta, por lo que no se calculará consumo energético.
+                    </p>
+                {% endif %}
+            </div>
+
+
+            <!-- FORMULARIO -->
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Campos ocultos -->
+                <input type="hidden" name="cliente" value="{{ cotizacion.nombre }}">
+                <input type="hidden" name="servicio" value="{{ cotizacion.servicio }}">
+
+
+                <!-- DESCRIPCIÓN -->
+                <div class="glass-box p-4 mb-4" style="border-left: 4px solid #ffc107;">
+                    <label class="form-label fw-semibold text-warning" style="font-size:1.05rem;">
+                        Descripción del Presupuesto
+                    </label>
+                    {{ form.descripcion }}
+                </div>
+
+
+                <!-- MONTO BASE -->
+                <div class="mb-4 d-flex flex-column align-items-center">
+                    <label class="form-label fw-semibold text-warning" style="font-size:1.05rem;">
+                        Monto Base (Mano de obra, material, etc.)
+                    </label>
+                    <div class="input-group" style="width: 250px; border: 2px solid rgba(212,175,55,0.4); border-radius: 10px; overflow: hidden;">
+                        <span class="input-group-text" style="
+                            background: transparent;
+                            border: none;
+                            color: #d4af37;
+                            font-weight: bold;
+                        ">$</span>
+                        {{ form.monto_base }}
+                    </div>
+                </div>
+
+
+                <!-- HERRAMIENTA -->
+                <div class="mb-4">
+                    <label class="form-label fw-semibold text-warning">Herramienta utilizada</label>
+                    {{ form.herramienta }}
+                </div>
+
+
+                <!-- TOTAL FINAL (solo si hay herramienta) -->
+                {% if herramienta_seleccionada %}
+                <div class="glass-box p-4 mb-5" style="border: 1px solid #ffc107;">
+
+                    <h4 class="fw-bold text-warning text-center mb-3">Total Final Estimado</h4>
+
+                    <p class="text-light mb-1">
+                        Monto Base: <strong>$ <span id="monto_base_text">{{ monto_base|default:0 }}</span></strong>
+                    </p>
+
+
+                    <p class="text-light mb-3">
+                        Costo Energético: <strong>$ {{ costo_energia|default:0 }}</strong>
+                    </p>
+
+                    <h3 class="fw-bold text-center text-warning">
+                        Total: $ <span id="total_final_text">{{ total_final }}</span>
+                    </h3>
+
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- BOTÓN -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-warning fw-bold px-5 py-2 rounded-pill shadow-lg premium-btn">
+                        Guardar Presupuesto
+                    </button>
+                </div>
+            </form>
+
+
+            <!-- AUTO-REFRESCAR AL CAMBIAR HERRAMIENTA -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const selectHerramienta = document.querySelector("select[name='herramienta']");
+    if (selectHerramienta) {
+        selectHerramienta.addEventListener("change", function() {
+            this.form.submit();
+        });
+    }
+});
+
+            
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const inputMonto = document.querySelector("#id_monto_base");
+    const textoMonto = document.querySelector("#monto_base_text");
+    const textoTotal = document.querySelector("#total_final_text");
+    const costoEnergia = parseFloat("{{ costo_energia|default:0 }}");
+
+    inputMonto.addEventListener("input", () => {
+        let monto = parseFloat(inputMonto.value) || 0;
+
+        // Mostrar en "Monto Base"
+        textoMonto.innerText = monto;
+
+        // Calcular total en vivo
+        let total = monto + costoEnergia;
+        textoTotal.innerText = total.toFixed(2);
+    });
+
+});
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById("id_monto_base");
+    if (input) {
+        // Limpiar si el valor es 0
+        if (input.value === "0" || input.value === "") {
+            input.value = "";
+            input.placeholder = "0";
+        }
+        // Al hacer foco, limpiar si es 0
+        input.addEventListener("focus", function() {
+            if (this.value === "0") this.value = "";
+        });
+        // Al perder foco, restaurar 0 si está vacío
+        input.addEventListener("blur", function() {
+            if (this.value === "") this.value = "0";
+        });
+    }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const inputMonto = document.getElementById("id_monto_base");
+    const costoEnergetico = parseFloat("{{ costo_energia|default:0 }}") || 0;
+
+    function actualizarTotal() {
+        const montoBase = parseFloat(inputMonto.value) || 0;
+        const total = montoBase + costoEnergetico;
+
+        // Formatear en pesos chilenos
+        const formatear = (v) => "$\u00a0" + v.toLocaleString('es-CL', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        // Actualizar los valores en pantalla
+        document.getElementById("monto-base-display").textContent = formatear(montoBase);
+        document.getElementById("total-display").textContent = "Total: " + formatear(total);
+    }
+
+    inputMonto.addEventListener("input", actualizarTotal);
+    actualizarTotal(); // ejecutar al cargar
+});
+</script>
+
+
+     
+
+        </div>
+
+    </div>
+</section>
+
+
+<style>
+    .glass-box {
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(7px);
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    input, textarea {
+        background: rgba(255,255,255,0.08) !important;
+        border: 1px solid rgba(255,255,255,0.25) !important;
+        color: #fff !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        font-size: 1rem !important;
+    }
+</style>
+
+{% endblock %}

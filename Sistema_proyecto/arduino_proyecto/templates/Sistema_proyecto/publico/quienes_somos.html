@@ -1,0 +1,89 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Quiénes Somos | Puingenierías{% endblock %}
+
+{% block content %}
+<section class="quienes-section py-5">
+  <div class="container text-light">
+    <div class="text-center mb-5">
+      <h1 class="fw-bold text-warning"> Quiénes Somos</h1>
+      <p class="text-light-50">
+        En <b>Puingenierías</b>, somos una empresa de servicios industriales orientada al mantenimiento,
+        limpieza técnica y soporte de equipos y herramientas utilizadas en entornos de trabajo.<br>
+        Nos destacamos por ofrecer soluciones prácticas y de calidad, respaldadas por experiencia y compromiso profesional.
+      </p>
+    </div>
+    <div class="row text-center mb-5">
+      <div class="col-md-6 mb-4">
+        <div class="quienes-card p-4 h-100">
+          <i class="fa-solid fa-bullseye fa-3x text-warning mb-3"></i>
+          <h4 class="fw-bold text-primary">Nuestra Misión</h4>
+          <p>
+            Proporcionar servicios industriales eficientes y seguros,
+            apoyándonos en herramientas profesionales y personal capacitado,
+            garantizando resultados confiables y la satisfacción de cada cliente.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="quienes-card p-4 h-100">
+          <i class="fa-solid fa-eye fa-3x text-warning mb-3"></i>
+          <h4 class="fw-bold text-primary">Nuestra Visión</h4>
+          <p>
+            Convertirnos en una empresa reconocida por su compromiso, 
+            responsabilidad y calidad en el área de servicios industriales, 
+            manteniendo siempre altos estándares de trabajo y seguridad.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mb-5">
+      <h4 class="fw-bold text-warning mb-4 text-center">Áreas en las que trabajamos</h4>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="quienes-card text-center p-4 h-100">
+            <i class="fa-solid fa-screwdriver-wrench fa-2x text-warning mb-3"></i>
+            <h6 class="fw-bold text-primary">Mantenimiento Industrial</h6>
+            <p>
+              Mantenimiento preventivo y correctivo de herramientas eléctricas y equipos industriales 
+              como compresores, esmeriles y equipos de taller.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quienes-card text-center p-4 h-100">
+            <i class="fa-solid fa-water fa-2x text-warning mb-3"></i>
+            <h6 class="fw-bold text-primary">Limpieza Técnica</h6>
+            <p>
+              Limpieza profunda de maquinaria, herramientas y superficies mediante hidrolavadoras industriales
+              y técnicas de desincrustación seguras.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quienes-card text-center p-4 h-100">
+            <i class="fa-solid fa-toolbox fa-2x text-warning mb-3"></i>
+            <h6 class="fw-bold text-primary">Soporte Técnico</h6>
+            <p>
+              Asesoramiento y asistencia técnica en terreno para optimizar el uso y 
+              mantenimiento de herramientas eléctricas e inalámbricas profesionales.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <p class="text-light-50">
+        En <b>Puingenierías</b> creemos en el trabajo responsable, la eficiencia y la mejora continua.<br>
+        Cada servicio que realizamos está orientado a ofrecer confianza, seguridad y resultados de calidad.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

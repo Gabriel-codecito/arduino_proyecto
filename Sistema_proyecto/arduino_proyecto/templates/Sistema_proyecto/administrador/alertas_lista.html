@@ -1,0 +1,151 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+
+{% block title %}Alertas IoT{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+
+  <h2 class="text-warning fw-bold mb-4">Alertas IoT en Tiempo Real</h2>
+
+  <!-- LISTA DE ALERTAS (si existen) -->
+  {% if alertas_detectadas %}
+    <div class="mt-4">
+      <h3 class="text-warning">Alertas Detectadas</h3>
+      <ul class="text-light">
+        {% for alerta in alertas_detectadas %}
+          <li> {{ alerta }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <!-- TARJETAS DE VALORES EN TIEMPO REAL -->
+  <div class="row g-4 text-center mt-4">
+
+    <!-- TEMPERATURA -->
+    <div class="col-md-3">
+      <div class="alert alert-{{ temp_color }} p-4 rounded">
+        <h4 class="mb-2">Temperatura</h4>
+        <h3>{{ temp }}°C</h3>
+      </div>
+    </div>
+
+    <!-- HUMEDAD -->
+    <div class="col-md-3">
+      <div class="alert alert-{{ hum_color }} p-4 rounded">
+        <h4 class="mb-2">Humedad</h4>
+        <h3>{{ hum }}%</h3>
+      </div>
+    </div>
+
+    <!-- VIBRACIÓN -->
+    <div class="col-md-3">
+      <div class="alert alert-{{ vib_color }} p-4 rounded">
+        <h4 class="mb-2">Vibración</h4>
+        <h3>{{ vib }}</h3>
+      </div>
+    </div>
+
+    <!-- CORRIENTE -->
+    <div class="col-md-3">
+      <div class="alert alert-{{ corr_color }} p-4 rounded">
+        <h4 class="mb-2">Corriente</h4>
+        <h3>{{ corr }} A</h3>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<!-- CONTENEDOR ALINEADO -->
+<div class="mt-5 d-flex justify-content-center">
+  <div style="width: 80%;">
+
+    <h3 class="text-warning fw-bold mb-3">
+      <i class="bi bi-thermometer-half"></i> Rangos de Temperatura (Recomendados)
+    </h3>
+
+    <table class="table table-dark table-striped text-center" 
+           style="border-radius: 12px; overflow: hidden;">
+
+      <thead>
+        <tr>
+          <th class="text-warning">Rango</th>
+          <th class="text-warning">Color</th>
+          <th class="text-warning">Descripción</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- RANGO NORMAL -->
+        <tr>
+          <td>0°C – 30°C</td>
+          <td>
+            <span style="
+                display:inline-block;
+                width:16px;
+                height:16px;
+                background-color:#0d6efd;
+                border-radius:50%;
+                margin-right:6px;
+            "></span>
+            Azul
+          </td>
+          <td>Normal, sin riesgo.</td>
+        </tr>
+
+        <!-- RANGO ADVERTENCIA -->
+        <tr>
+          <td>30°C – 40°C</td>
+          <td>
+            <span style="
+                display:inline-block;
+                width:16px;
+                height:16px;
+                background-color:#ffc107;
+                border-radius:50%;
+                margin-right:6px;
+            "></span>
+            Amarillo
+          </td>
+          <td>Alta, advertencia.</td>
+        </tr>
+
+        <!-- RANGO PELIGRO -->
+        <tr>
+          <td>&gt; 40°C</td>
+          <td>
+            <span style="
+                display:inline-block;
+                width:16px;
+                height:16px;
+                background-color:#dc3545;
+                border-radius:50%;
+                margin-right:6px;
+            "></span>
+            Rojo
+          </td>
+          <td>Peligrosa, generar alerta.</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<script>
+    // Refrescar cada 5 segundos (5000ms)
+    setInterval(function() {
+        window.location.reload();
+    }, 5000);
+</script>
+{% endblock %}

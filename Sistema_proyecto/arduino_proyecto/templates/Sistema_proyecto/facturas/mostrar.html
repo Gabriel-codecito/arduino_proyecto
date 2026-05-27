@@ -1,0 +1,86 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/facturas/base_factura.html" %}
+{% load humanize %}
+{% load formato_chile %}
+{% block title %}Factura {{ factura.numero_factura }}{% endblock %}
+
+{% block content %}
+
+<h2>P&U INGENIERÍAS E.I.R.L.</h2>
+<p>
+    Servicios Industriales e IoT<br>
+    Correo: contacto@puingenierias.cl<br>
+    Teléfono: +56 9 1234 5678
+</p>
+
+<hr>
+
+<h3>FACTURA</h3>
+<p>
+    <strong>N°:</strong> {{ factura.numero_factura }}<br>
+    <strong>Fecha:</strong> {{ factura.fecha|date:"d-m-Y H:i" }}
+</p>
+
+<hr>
+
+<h3>Datos del Cliente</h3>
+<p>
+    <strong>Cliente:</strong> {{ factura.orden_trabajo.cliente }}<br>
+    <strong>Orden de Trabajo:</strong> OT-{{ factura.orden_trabajo.id }}<br>
+    <strong>Orden de Compra:</strong> {{ factura.orden_compra.numero_orden_compra }}
+</p>
+
+<hr>
+
+<h3>Datos del Trabajador</h3>
+<p>
+    <strong>Técnico:</strong> {{ factura.orden_trabajo.tecnico.nombre|default:"No asignado" }}<br>
+    <strong>Herramienta(s):</strong>
+    {% if factura.orden_trabajo.herramientas.all %}
+        {% for herramienta in factura.orden_trabajo.herramientas.all %}
+            {{ herramienta }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    {% else %}
+        Sin herramientas asignadas
+    {% endif %}
+</p>
+
+<hr>
+
+<h3>Detalle del Servicio</h3>
+<table>
+    <tr>
+        <th>Servicio</th>
+        <th>Descripción</th>
+        <th>Monto Neto</th>
+    </tr>
+    <tr>
+        <td>{{ factura.orden_trabajo.servicio }}</td>
+        <td>{{ factura.orden_trabajo.descripcion }}</td>
+        <td>{{ factura.monto_neto|peso_chileno }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<h3>Resumen Energético (IoT)</h3>
+<p>
+    Energía total registrada: {{ factura.orden_trabajo.energia_total_kwh|floatformat:3 }} kWh<br>
+    Costo energético: ${{ factura.costo_energia|floatformat:2 }}
+</p>
+
+<div class="totales">
+    <p>Subtotal Neto: ${{ factura.monto_neto|intcomma }}</p>
+    <p>IVA 19%: ${{ factura.iva|intcomma }}</p>
+    <h3>TOTAL A PAGAR: ${{ factura.monto_total|intcomma }}</h3>
+</div>
+
+<a href="{% url 'factura_pdf' factura.id %}" class="btn">
+    Descargar PDF
+</a>
+
+{% endblock %}

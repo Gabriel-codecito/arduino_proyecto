@@ -1,0 +1,114 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Registrar Uso de Herramienta{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .uso-card {
+        background: rgba(20, 20, 20, 0.95);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        padding: 35px;
+        max-width: 750px;
+        margin: 0 auto;
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    }
+
+    .form-label {
+        color: #ffcc00 !important;
+        font-weight: 600 !important;
+        margin-bottom: 6px;
+    }
+
+    input, select {
+        background-color: rgba(255,255,255,0.07) !important;
+        border: 1px solid rgba(255,255,255,0.18) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+        width: 100% !important;
+    }
+
+    .btn-uso {
+        background-color: #ffcc00 !important;
+        color: black !important;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: bold;
+        border: none;
+    }
+
+    select option {
+        background-color: #111 !important;
+        color: white !important;
+    }
+</style>
+
+<section class="home-admin py-5">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-warning">Registrar Uso de Herramienta</h2>
+            <p class="text-light-50">Complete los datos del uso efectuado.</p>
+        </div>
+
+        <div class="uso-card">
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+
+                    {% if field.name == "herramienta" %}
+                        <select name="{{ field.name }}" class="form-control">
+                            {% for h in field.field.queryset %}
+                                <option value="{{ h.id }}">{{ h.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                    {% if field.field.widget.input_type == "datetime-local" %}
+                        <input 
+                            type="datetime-local" 
+                            name="{{ field.name }}" 
+                            value="{{ field.value|default:'' }}"
+                            class="form-control"
+                            min="{{ hoy }}"
+                            required
+                        >
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endif %}
+
+
+                    {% if field.errors %}
+                        <div class="error-text">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="text-center mt-4">
+                    <button class="btn-uso">Guardar Registro</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

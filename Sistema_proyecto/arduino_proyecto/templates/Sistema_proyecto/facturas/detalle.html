@@ -1,0 +1,146 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Detalle Factura {{ factura.numero_factura }}{% endblock %}
+
+{% block content %}
+<style>
+    .card-premium {
+        background: rgba(0,0,0,0.75);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 204, 0, .3);
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        margin-bottom: 25px;
+    }
+
+    .title-premium {
+        color: #ffcc00;
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 0 0 12px rgba(255,204,0,.7);
+    }
+
+    .subtitle-premium {
+        color: #ffcc00;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .data-label {
+        color: #ccc;
+        font-weight: bold;
+    }
+
+    .data-value {
+        color: white;
+    }
+</style>
+
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="title-premium mb-4">
+            Detalle Factura N° {{ factura.numero_factura }}
+        </h2>
+
+        <!-- ================= DATOS FACTURA ================= -->
+        <div class="card-premium">
+            <h3 class="subtitle-premium">Datos de la Factura</h3>
+
+            <p><span class="data-label">Número:</span>
+               <span class="data-value">{{ factura.numero_factura }}</span></p>
+
+            <p><span class="data-label">Fecha:</span>
+               <span class="data-value">{{ factura.fecha|date:"d-m-Y H:i" }}</span></p>
+
+            <hr class="text-secondary">
+
+            <p><span class="data-label">Monto Neto:</span>
+            <span class="data-value">
+                ${{ factura.monto_neto|floatformat:0|intcomma }}
+            </span>
+            </p>
+
+            <p><span class="data-label">IVA (19%):</span>
+            <span class="data-value">
+                ${{ factura.iva|floatformat:0|intcomma }}
+            </span>
+            </p>
+
+            <p class="fw-bold fs-5">
+            <span class="data-label">Total a Pagar:</span>
+            <span class="text-warning">
+                ${{ factura.monto_total|floatformat:0|intcomma }}
+            </span>
+            </p>
+
+        </div>
+
+        <!-- ================= ARCHIVOS ================= -->
+        <div class="card-premium">
+            <h3 class="subtitle-premium">Documentos Asociados</h3>
+
+            {% if factura.archivo_cotizacion %}
+                <a class="btn btn-sm btn-warning mb-2"
+                   href="{{ factura.archivo_cotizacion.url }}" target="_blank">
+                   Cotización
+                </a>
+            {% endif %}
+
+            {% if factura.archivo_presupuesto %}
+                <a class="btn btn-sm btn-warning mb-2"
+                   href="{{ factura.archivo_presupuesto.url }}" target="_blank">
+                   Presupuesto
+                </a>
+            {% endif %}
+
+            {% if factura.archivo_oc %}
+                <a class="btn btn-sm btn-warning mb-2"
+                   href="{{ factura.archivo_oc.url }}" target="_blank">
+                   Orden de Compra
+                </a>
+            {% endif %}
+
+            {% if factura.archivo_ot %}
+                <a class="btn btn-sm btn-warning mb-2"
+                   href="{{ factura.archivo_ot.url }}" target="_blank">
+                   Orden de Trabajo
+                </a>
+            {% endif %}
+
+            {% if not factura.archivo_cotizacion and not factura.archivo_presupuesto and not factura.archivo_oc and not factura.archivo_ot %}
+                <p class="text-muted">No hay documentos adjuntos.</p>
+            {% endif %}
+        </div>
+
+        <!-- ================= ORDEN DE TRABAJO ================= -->
+        {% if factura.orden_trabajo %}
+        <div class="card-premium">
+            <h3 class="subtitle-premium">Orden de Trabajo Asociada</h3>
+
+            <p><span class="data-label">OT:</span>
+               <span class="data-value">{{ factura.orden_trabajo }}</span></p>
+
+            <p><span class="data-label">Cliente:</span>
+               <span class="data-value">{{ factura.orden_trabajo.cliente }}</span></p>
+
+            <p><span class="data-label">Servicio:</span>
+               <span class="data-value">{{ factura.orden_trabajo.servicio }}</span></p>
+        </div>
+        {% endif %}
+
+        <a href="{% url 'lista_facturas' %}" class="btn btn-warning mt-3">
+            Volver a Facturas
+        </a>
+
+    </div>
+</section>
+{% endblock %}

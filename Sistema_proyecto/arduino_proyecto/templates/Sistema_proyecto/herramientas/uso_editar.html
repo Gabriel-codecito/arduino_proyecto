@@ -1,0 +1,113 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+
+{% block title %}Editar Uso de Herramienta{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<style>
+
+    .edit-card {
+        background: rgba(20,20,20,0.92);
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #ffcc00;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    input, select, textarea {
+        background-color: rgba(255,255,255,0.07) !important;
+        border: 1px solid rgba(255,255,255,0.18) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        width: 100% !important;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    option {
+        background-color: #111 !important;
+        color: white !important;
+        font-weight: bold !important;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #ffcc00 !important;
+        box-shadow: 0 0 8px rgba(255,204,0,0.5);
+        transform: scale(1.01);
+    }
+
+    .btn-actualizar {
+        background-color: #ffcc00 !important;
+        color: black !important;
+        font-weight: bold;
+        padding: 12px 30px;
+        border-radius: 8px;
+        border: none;
+        transition: 0.2s;
+        width: 100%;
+    }
+
+    .btn-actualizar:hover {
+        background-color: #e6b800 !important;
+        transform: scale(1.03);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-warning">Editar Registro de Uso</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="edit-card">
+
+                <label class="form-label">Herramienta</label>
+                {{ form.herramienta }}
+
+                <label class="form-label">Orden de Trabajo</label>
+                {{ form.orden_trabajo }}
+
+                <label class="form-label">Fecha inicio</label>
+                {{ form.fecha_inicio }}
+
+                <label class="form-label">Fecha fin</label>
+                {{ form.fecha_fin }}
+
+                <label class="form-label">Energía consumida</label>
+                {{ form.energia_consumida }}
+
+                <button class="btn-actualizar mt-3">Actualizar</button>
+
+            </div>
+        </form>
+
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Reportes Administrador | Puingenierías{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+
+    <div class="card bg-dark text-light shadow-lg rounded-4 p-4">
+        <h3 class="text-warning mb-3 text-center">
+             Panel de Reportes Administrativos
+        </h3>
+
+        <p class="text-center">
+            Aquí puedes revisar los reportes generados, estadísticas del sistema y accesos directos
+            a informes importantes de energía, herramientas, órdenes de trabajo y más.
+        </p>
+
+        <hr class="border-warning">
+
+        <!-- MÉTRICAS PRINCIPALES -->
+        <div class="row text-center mb-4">
+            <div class="col-md-4">
+                <div class="p-3 bg-secondary rounded-3 shadow">
+                    <h5 class="text-warning">Mediciones Totales</h5>
+                    <h3>{{ total_mediciones }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-secondary rounded-3 shadow">
+                    <h5 class="text-warning">Herramientas Registradas</h5>
+                    <h3>{{ total_herramientas }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-secondary rounded-3 shadow">
+                    <h5 class="text-warning">Órdenes de Trabajo</h5>
+                    <h3>{{ total_ot }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-warning">
+
+        <!-- LISTADO DE REPORTES -->
+        <h4 class="text-warning mt-4"> Reportes Generados</h4>
+
+        {% if reportes %}
+            <ul class="list-group mt-3">
+                {% for r in reportes %}
+                    <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                        <span>
+                            <strong>{{ r.tipo }}</strong> — {{ r.fecha|date:"d/m/Y H:i" }}
+                        </span>
+                        <a href="{{ r.archivo.url }}" download class="btn btn-sm btn-warning">
+                            Descargar
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center text-muted mt-3">No hay reportes generados todavía.</p>
+        {% endif %}
+
+        <hr class="border-warning">
+
+        <!-- BOTÓN PARA IR AL EMBED -->
+        <div class="text-center mt-4">
+            <a href="{% url 'metabase_embed' %}" class="btn btn-warning px-4 py-2 rounded-3">
+                Ver Dashboard Metabase 
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitud de contacto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-left: 5px solid #ffcc00;
+            border-radius: 6px;
+            max-width: 600px;
+            margin: auto;
+        }
+        h2 { color: #003366; }
+        p { font-size: 15px; }
+        .label {
+            font-weight: bold;
+            color: #003366;
+        }
+        .botones {
+            margin-top: 30px;
+            display: flex;
+            gap: 16px;
+        }
+        .btn-aceptar {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .btn-rechazar {
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .btn-aceptar:hover { background-color: #218838; }
+        .btn-rechazar:hover { background-color: #c82333; }
+        .divider {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+        .footer {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Nueva solicitud de cotización</h2>
+
+    <p><span class="label">Nombre:</span> {{ nombre }}</p>
+    <p><span class="label">Correo:</span> {{ correo }}</p>
+    <p><span class="label">Empresa:</span> {{ empresa }}</p>
+    <p><span class="label">Teléfono:</span> {{ telefono }}</p>
+    <p><span class="label">Servicio:</span> {{ servicio }}</p>
+
+    <hr class="divider">
+
+    <p><span class="label">Descripción:</span></p>
+    <p>{{ mensaje }}</p>
+
+    <hr class="divider">
+
+    <p><span class="label">¿Qué desea hacer con esta cotización?</span></p>
+    <div class="botones">
+        <a href="{{ aceptar_url }}" class="btn-aceptar">✔ Aceptar Cotización</a>
+        <a href="{{ rechazar_url }}" class="btn-rechazar">✘ Rechazar Cotización</a>
+    </div>
+
+    <p class="footer">
+        Este correo fue generado automáticamente por el sistema IoT Puingenierías.<br>
+        Al hacer clic en los botones, el estado de la cotización cambiará automáticamente.
+    </p>
+</div>
+</body>
+</html>

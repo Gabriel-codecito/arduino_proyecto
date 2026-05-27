@@ -1,0 +1,110 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+
+{% block title %}Detalle de Uso{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<style>
+
+    .detalle-card {
+        background: rgba(20, 20, 20, 0.92);
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 550px;
+        margin: 40px auto;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    }
+
+    .detalle-item {
+        margin-bottom: 18px;
+        color: #f1f1f1;
+        font-size: 1.1rem;
+        line-height: 1.4rem;
+    }
+
+    .detalle-item strong {
+        color: #ffcc00;
+        font-weight: 600;
+    }
+
+    .btn-editar {
+        background-color: #ffcc00 !important;
+        color: black !important;
+        font-weight: bold;
+        padding: 10px 25px;
+        border-radius: 8px;
+        border: none;
+        transition: 0.2s;
+        display: inline-block;
+    }
+
+    .btn-editar:hover {
+        background-color: #e6b800 !important;
+        transform: scale(1.05);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+    .btn-eliminar {
+    background-color: #e63946 !important;
+    color: white !important;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: none;
+    transition: 0.2s;
+    display: inline-block;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-warning">Detalle del Uso</h2>
+
+        <div class="detalle-card">
+
+            <p class="detalle-item">
+                <strong>Herramienta:</strong> {{ registro.herramienta.nombre }}
+            </p>
+
+            <p class="detalle-item">
+                <strong>Orden de Trabajo:</strong> OT #{{ registro.orden_trabajo.id }}
+            </p>
+
+            <p class="detalle-item">
+                <strong>Fecha Inicio:</strong> {{ registro.fecha_inicio }}
+            </p>
+
+            <p class="detalle-item">
+                <strong>Fecha Fin:</strong> {{ registro.fecha_fin|default:"(En curso)" }}
+            </p>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'editar_registro_uso' registro.id %}" class="btn-editar">Editar</a>
+                <a href="{% url 'lista_registros_uso'  %}" class="btn px-4" style="background:#5a5a5a; color:white;">
+                    Volver
+                </a>
+                <a href="{% url 'eliminar_registro_uso' registro.id %}" class="btn-eliminar">
+                    Eliminar
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}

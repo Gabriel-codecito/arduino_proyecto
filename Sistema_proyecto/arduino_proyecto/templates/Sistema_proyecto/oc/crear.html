@@ -1,0 +1,113 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Crear Orden de Compra{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+<style>
+    /* --- TARJETA PREMIUM --- */
+    .oc-card {
+        background: rgba(20, 20, 20, 0.9);
+        padding: 30px;
+        border-radius: 18px;
+        max-width: 550px;
+        margin: auto;
+        box-shadow: 0 0 25px rgba(0,0,0,0.4);
+        color: white;
+    }
+
+    .oc-label {
+        color: #ffcc00;
+        font-weight: bold;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .oc-value,
+    input[disabled] {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 12px;
+        font-size: 1.05rem;
+    }
+
+    .btn-premium {
+        background-color: #ffcc00;
+        border: none;
+        padding: 12px 25px;
+        font-weight: bold;
+        border-radius: 10px;
+        transition: 0.2s;
+    }
+
+    .btn-premium:hover {
+        background-color: #e6b800;
+        transform: scale(1.03);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="home-admin py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold text-warning mb-4">
+            Crear Orden de Compra
+        </h2>
+
+        <div class="oc-card text-start">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Empresa -->
+                <span class="oc-label">Empresa</span>
+                <input type="text" value="{{ presupuesto.cotizacion.empresa }}" disabled>
+
+                <!-- Cliente -->
+                <span class="oc-label">Cliente</span>
+                <input type="text" value="{{ presupuesto.cotizacion.nombre }}" disabled>
+
+                <!-- Servicio -->
+                <span class="oc-label">Servicio</span>
+                <input type="text" value="{{ presupuesto.servicio }}" disabled>
+
+                <!-- Monto total -->
+                <span class="oc-label">Monto Total</span>
+                <input type="text" value="${{ presupuesto.monto_estimado }}" disabled>
+
+                <!-- Fecha -->
+                <span class="oc-label">Fecha de Emisión</span>
+                <input type="text" value="{{ presupuesto.fecha|date:'d-m-Y H:i' }}" disabled>
+
+                <!-- Campos ocultos -->
+                <input type="hidden" name="presupuesto" value="{{ presupuesto.id }}">
+                <input type="hidden" name="cotizacion" value="{{ presupuesto.cotizacion.id }}">
+                <input type="hidden" name="empresa" value="{{ presupuesto.cotizacion.empresa }}">
+                <input type="hidden" name="cliente" value="{{ presupuesto.cotizacion.nombre }}">
+                <input type="hidden" name="monto_total" value="{{ presupuesto.monto_estimado }}">
+
+                <div class="text-center mt-4">
+                    <button class="btn-premium">Crear Orden de Compra</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

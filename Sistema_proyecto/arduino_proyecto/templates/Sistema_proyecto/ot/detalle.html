@@ -1,0 +1,291 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Detalle OT{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+body {
+    background: linear-gradient(145deg, #002a5c, #003f87);
+}
+
+.ot-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 35px;
+}
+
+/* Tarjeta principal */
+.ot-card {
+    background: rgba(0, 0, 0, 0.82);
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    box-shadow: 0 0 25px rgba(0,0,0,0.55), 
+                0 0 30px rgba(255, 204, 0, 0.18);
+    animation: fadeIn 0.6s ease-out;
+    color: #e8e8e8;
+}
+
+/* Títulos */
+.ot-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffcc00;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: #ffcc00;
+    margin-top: 25px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+    padding-bottom: 5px;
+    text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+
+/* Etiquetas */
+.label {
+    color: #ffcc00;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+/* Caja de descripción */
+.desc-box {
+    background: rgba(255,255,255,0.08);
+    padding: 15px;
+    border-radius: 12px;
+    color: #f5f5f5;
+}
+
+/* Tabla premium */
+.table-premium {
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+}
+
+.table-premium thead th {
+    background: rgba(255, 204, 0, 0.15);
+    color: #ffcc00;
+    text-shadow: 0 0 6px rgba(255, 204, 0, 0.4);
+    border-bottom: 2px solid #ffcc00;
+}
+
+.table-premium tbody tr:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Comentarios */
+.comment-item {
+    background: rgba(255,255,255,0.08);
+    padding: 12px;
+    border-radius: 10px;
+    border-left: 4px solid #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* Botón premium */
+.btn-premium {
+    background: #ffcc00;
+    padding: 10px 26px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #002a5c;
+    border: none;
+    box-shadow: 0 0 12px rgba(255,204,0,0.7);
+    transition: 0.3s;
+}
+
+.btn-premium:hover {
+    background: #ffdd33;
+    transform: translateY(-3px);
+    box-shadow: 0 0 18px rgba(255,204,0,0.95);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.herramientas-empty {
+    color: #ffffff !important;
+}
+</style>
+
+<section class="py-5">
+<div class="container">
+
+    <div class="ot-container">
+        
+        <h2 class="ot-title text-center">
+            Orden de Trabajo — {{ ot.servicio }} N° {{ ot.presupuesto.cotizacion.id }}
+        </h2>
+
+        <div class="ot-card">
+
+            <!-- Información general -->
+            <div class="section-title">Información General</div>
+            <p><span class="label">Cliente:</span> {{ ot.cliente }}</p>
+            <p><span class="label">Técnico:</span> {{ ot.tecnico|default:"No asignado" }}</p>
+
+            <p>
+                <span class="label">Estado:</span> 
+                <span class="fw-bold text-warning">{{ ot.get_estado_display }}</span>
+            </p>
+
+            <p><span class="label">Fecha Inicio:</span> {{ ot.fecha_inicio|default:"-" }}</p>
+            <p><span class="label">Fecha Término:</span> {{ ot.fecha_termino|default:"-" }}</p>
+
+            <!-- Consumo energético -->
+
+            <div class="section-title">Consumo Energético</div>
+            <p><span class="label">Energía total:</span> {{ energia_total }} kWh</p>
+            <p><span class="label">Costo estimado:</span> ${{ costo_energia }}</p>
+            <p><span class="label">Temperatura:</span> {{ temperatura }} °C</p>
+            <p><span class="label">Vibración:</span> {{ vibracion }}</p>
+            <p><span class="label">Humedad:</span> {{ humedad }} %</p>
+
+
+
+            <!-- Indicadores -->
+            <div class="section-title">Indicadores de Eficiencia</div>
+            <p><span class="label">Duración del trabajo:</span> {{ duracion_ot }} hrs</p>
+
+            <!-- Progreso -->
+            <div class="section-title">Progreso</div>
+            <div class="d-flex justify-content-between mt-3 mb-4">
+                {% for color in estado_color %}
+                    <div style="color: {{ color }}; font-weight: bold;">●</div>
+                {% endfor %}
+            </div>
+
+            <!-- Descripción -->
+            <div class="section-title">Descripción</div>
+            <div class="desc-box">{{ ot.descripcion }}</div>
+
+            <!-- Herramientas -->
+            <div class="section-title">Herramientas Asociadas</div>
+            <ul>
+                {% for h in ot.herramientas.all %}
+                    <li>{{ h.nombre }}</li>
+                {% empty %}
+                    <li class="herramientas-empty">Sin herramientas registradas</li>
+                {% endfor %}
+            </ul>
+
+            <div class="text-center mt-3 mb-4">
+                <a href="{% url 'editar_ot' ot.id %}" class="btn-premium">Editar Orden de Trabajo</a>
+            </div>
+
+            <!-- Alertas IoT -->
+            {% if alertas_iot %}
+            <div class="section-title">Alertas IoT Relacionadas</div>
+            <div class="table-responsive">
+                <table class="table table-premium table-dark table-hover mt-2">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Herramienta</th>
+                            <th>Tipo</th>
+                            <th>Mensaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in alertas_iot %}
+                        <tr>
+                            <td>{{ a.fecha|date:"d-m-Y H:i" }}</td>
+                            <td>{{ a.herramienta.nombre }}</td>
+                            <td>{{ a.tipo }}</td>
+                            <td>{{ a.mensaje }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            <!-- Registros -->
+            <div class="section-title">Registros de Uso</div>
+            <div class="table-responsive">
+                <table class="table table-premium table-dark table-hover mt-2">
+                    <thead>
+                        <tr>
+                            <th>Herramienta</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th>Energía (kWh)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in registros %}
+                        <tr>
+                            <td>{{ r.herramienta.nombre }}</td>
+                            <td>{{ r.fecha_inicio }}</td>
+                            <td>{{ r.fecha_fin|default:"-" }}</td>
+                            <td>{{ r.energia_consumida }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No hay registros aún.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+  
+
+            <!-- Comentarios -->
+            <div class="section-title">Comentarios</div>
+
+            <!-- Formulario comentario -->
+            <form method="post" action="{% url 'agregar_comentario_ot' ot.id %}">
+                {% csrf_token %}
+
+                {% if ot.comentarioot_set.all %}
+                    {% for c in ot.comentarioot_set.all %}
+                        <div class="comentario-box">
+                            <strong>{{ c.autor }}</strong>
+                            <small>{{ c.fecha|date:"d/m/Y H:i" }}</small>
+                            <p>{{ c.texto }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No hay comentarios registrados.</p>
+                {% endif %}
+
+                <div class="text-center mt-3 mb-4">
+                    <textarea name="texto" class="form-control"
+                            rows="3" placeholder="Agregar comentario..." required>
+                    </textarea>
+
+
+                    <button type="submit" class="btn-premium mt-3">
+                        Enviar Comentario
+                    </button>
+                </div>
+            </form>
+
+
+            <div class="text-center mt-4">
+                <a href="{% url 'lista_ot' %}" class="btn px-4" style="background:#5a5a5a; color:white;">Volver</a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</section>
+{% endblock %}

@@ -1,0 +1,122 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Facturas | PUIngenierías{% endblock %}
+
+{% block content %}
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-warning mb-4">Facturas Registradas</h2>
+
+        <div class="table-responsive tabla-estilo">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>N° Factura</th>
+                        <th>Cliente</th>
+                        <th>Orden de Compra</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Archivos</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for f in facturas %}
+                    <tr>
+
+                        <!-- Número de Factura -->
+                        <td>{{ f.numero_factura }}</td>
+
+                        <!-- Cliente -->
+                        <td>
+                            {% if f.orden_trabajo and f.orden_trabajo.cliente %}
+                                {{ f.orden_trabajo.cliente }}
+                            {% else %}
+                                <span class="text-danger">Sin cliente</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- Orden de compra -->
+                        <td>
+                            {% if f.orden_compra %}
+                                OC {{ f.orden_compra.numero_orden_compra }}
+                            {% elif f.orden_trabajo %}
+                                Desde OT #{{ f.orden_trabajo.id }}
+                            {% else %}
+                                <span class="text-danger">No asociado</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- Monto -->
+                        <td>${{ f.monto_total|floatformat:0|intcomma|stringformat:"s"|cut:","|center:"1" }}</td>
+
+
+                        <!-- Fecha -->
+                        <td>{{ f.fecha|date:"d-m-Y H:i" }}</td>
+
+                        <!-- Archivos PDF -->
+                        <td>
+                            {% if f.archivo_cotizacion %}
+                                <a href="{{ f.archivo_cotizacion.url }}" 
+                                   class="btn btn-warning btn-sm mb-1">Cotización</a>
+                            {% endif %}
+
+                            {% if f.archivo_presupuesto %}
+                                <a href="{{ f.archivo_presupuesto.url }}" 
+                                   class="btn btn-warning btn-sm mb-1">Presupuesto</a>
+                            {% endif %}
+
+                            {% if f.archivo_oc %}
+                                <a href="{{ f.archivo_oc.url }}" 
+                                   class="btn btn-warning btn-sm mb-1">Orden Compra</a>
+                            {% endif %}
+
+                            {% if f.archivo_ot %}
+                                <a href="{{ f.archivo_ot.url }}" 
+                                   class="btn btn-warning btn-sm mb-1">OT</a>
+                            {% endif %}
+
+                            {% if not f.archivo_cotizacion and not f.archivo_presupuesto and not f.archivo_oc and not f.archivo_ot %}
+                                <span class="text-secondary">Sin archivos</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- Acción -->
+                        <td>
+                            <a href="{% url 'detalle_factura' f.id %}" 
+                               class="btn btn-sm btn-outline-warning">
+                                Ver
+                            </a>
+                           <a href="{% url 'mostrar_factura' f.id %}"
+                            class="btn btn-warning">
+                            Ver Factura
+                            </a>
+
+
+                        </td>
+
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">
+                            No hay facturas registradas.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

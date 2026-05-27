@@ -1,0 +1,102 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Contacto | Puingenierías{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<section class="contact-section py-5">
+  <div class="container text-light">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-warning display-7">Contáctanos</h2>
+      <p class="text-light-50 fs-5">
+        ¿Tienes dudas o necesitas una cotización? Completa el formulario y te responderemos a la brevedad.
+      </p>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="contact-card p-4 h-80">
+          <h4 class="fw-bold mb-4"><i class="fa-solid fa-building me-2 text-warning"></i> Puingenierías</h4>
+          <p><i class="fa-solid fa-location-dot me-2 text-warning"></i>Los Aromos #2485, Alto Hospicio, Chile</p>
+          <p><i class="fa-solid fa-envelope me-2 text-warning"></i>Puingenierias@gmail.com</p>
+          <p><i class="fa-solid fa-phone me-2 text-warning"></i>+56 9 96778357</p>
+          <p><i class="fa-solid fa-clock me-2 text-warning"></i>Lunes a Viernes: 09:00 - 18:00 hrs</p>
+        </div>
+      </div>
+      
+      <div class="col-lg-7">
+        <div class="contact-card p-4 h-100">
+          <h4 class="fw-bold mb-4"><i class="fa-solid fa-paper-plane me-2 text-warning"></i> Envíanos un mensaje</h4>
+          <form method="POST" action="{% url 'correo' %}">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+              </div>
+              <div class="col-md-6">
+                <label for="empresa" class="form-label">Empresa</label>
+                <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Ingresa tu empresa" required>
+              </div>
+              <div class="col-md-6">
+                <label for="correo" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="tuemail@ejemplo.com" required>
+              </div>
+              <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="+56 9 1234 5678">
+              </div>
+              <div class="col-md-6">
+                <label for="asunto" class="form-label">Asunto</label>
+                <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Motivo del contacto">
+              </div>
+              <div class="col-12">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
+              </div>
+              <div class="col-12 text-end mt-3">
+                <button type="submit" class="btn btn-warning text-dark fw-bold px-4 py-2">
+                  <i class="fa-solid fa-paper-plane me-2"></i>Enviar Mensaje
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- MAPA CENTRADO Y ANCHO -->
+    <div class="row mt-5 justify-content-center">
+      <div class="col-12">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold text-warning display-7">
+            <i class="fa-solid fa-map-location-dot me-2"></i> Nuestra Ubicación
+          </h2>
+        </div>
+        <div class="map-container">
+          <div class="ratio ratio-16x9">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3660.234567890123!2d-70.10643110087737!3d-20.25440598108827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDE1JzE1LjkiUyA3MMKwMDYnMjMuMiJX!5e0!3m2!1ses!2scl!4v1620000000000!5m2!1ses!2scl"
+              style="border:0; border-radius: 10px;" 
+              allowfullscreen 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Ubicación de P&U INGENIERÍAS en Alto Hospicio">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

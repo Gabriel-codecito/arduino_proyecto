@@ -1,0 +1,670 @@
+
+/* ==== NAVBAR ==== */
+.navbar {
+  background: linear-gradient(90deg, #002b5c, #004080);
+  padding: 10px 0;
+}
+
+.navbar-brand img {
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffcc00 !important;
+}
+
+/* ==== BOTÓN SESIÓN ==== */
+.btn-warning {
+  background-color:#ffcc00 !important;
+  border: none !important;
+  transition: 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #cc0000 !important;
+  transform: scale(1.05);
+}
+
+/* ==== FOOTER ==== */
+.footer {
+  background: linear-gradient(90deg, #002b5c, #004080);
+  color: white;
+}
+
+.footer a {
+  color: #ffcc00;
+}
+
+.footer a:hover {
+  color: #ffd633;
+  text-decoration: underline;
+}
+
+/* ==== CUERPO GENERAL ==== */
+body {
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", sans-serif;
+}
+
+main {
+  min-height: 70vh;
+}
+
+
+/* ==== TARJETAS DE CONTACTO BLANCAS ==== */
+.contact-card {
+  background: #ffffff; /* Fondo blanco */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  color: #333333; /* Texto oscuro */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ==== CAMPOS DEL FORMULARIO ==== */
+.form-control {
+  background-color: #f8f9fa; /* gris muy suave */
+  color: #212529;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+}
+
+.form-control:focus {
+  background-color: #fff;
+  border-color: #ffcc00;
+  box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+/* ==== TÍTULOS DENTRO DE TARJETAS ==== */
+.contact-card h4, 
+.contact-card h5 {
+  color: #002b5c;
+  font-weight: bold;
+}
+
+
+/* ==== SECCIÓN UBICACIÓN ==== */
+.ubicacion-section {
+  background: linear-gradient(to bottom, #002b5c, #001a33);
+  color: #fff;
+}
+
+.ubicacion-card {
+  background: #ffffff;
+  color: #333;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ubicacion-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+.ubicacion-card h4 {
+  color: #002b5c;
+}
+
+.ubicacion-card ul li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.ubicacion-card i {
+  width: 20px;
+  text-align: center;
+}
+
+/* ==== IMÁGENES ==== */
+.ubicacion-section img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ubicacion-section img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+}
+
+/* ==== SECCIÓN CONTACTO ==== */
+.contact-section {
+  background: linear-gradient(to bottom, #002b5c, #001a33);
+  color: #ffffff;
+}
+
+.contact-card {
+  background: #ffffff;
+  color: #222;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+.contact-card .form-label {
+  color: #002b5c;
+}
+
+.contact-card .form-control {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  transition: 0.3s ease;
+}
+
+.contact-card .form-control:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+.contact-section iframe {
+  border: 0;
+}
+
+/* ==== SECCIÓN COTIZACIÓN ==== */
+.cotizacion-section {
+  background: linear-gradient(to bottom, #002b5c, #001a33);
+  color: #ffffff;
+}
+
+.cotizacion-card {
+  background: #ffffff;
+  color: #222;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cotizacion-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+.cotizacion-card .form-label {
+  color: #002b5c;
+  font-weight: 600;
+}
+
+.cotizacion-card .form-control {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  transition: 0.3s ease;
+}
+
+.cotizacion-card .form-control:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+.cotizacion-card .input-group-text {
+  border: none;
+}
+
+/* ==== SECCIÓN RECLAMOS ==== */
+.reclamos-section {
+  background: linear-gradient(to bottom, #002b5c, #001a33);
+  color: #ffffff;
+}
+
+.reclamo-card {
+  background: #ffffff;
+  color: #222;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reclamo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+.reclamo-card h5 {
+  color: #002b5c;
+}
+
+.reclamo-card p,
+.reclamo-card ul {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.reclamo-card ul li {
+  margin-bottom: 8px;
+}
+/* ==== SECCIÓN QUIÉNES SOMOS ==== */
+.quienes-section {
+  background: linear-gradient(to bottom, #002b5c, #001a33);
+  color: #ffffff;
+}
+
+.quienes-card {
+  background: #ffffff;
+  color: #222;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quienes-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+.quienes-card h5, .quienes-card h6 {
+  color: #002b5c;
+}
+
+.quienes-card p {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.text-light-50 {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==== SECCIÓN SERVICIOS ==== */
+.servicios-section {
+  background: linear-gradient(to bottom, #002b5c, #001a33);
+  color: #ffffff;
+}
+
+.servicio-card {
+  background: #ffffff;
+  color: #222;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servicio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+.servicio-card h4 {
+  color: #002b5c;
+}
+
+.servicio-card ul {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.servicios-section img {
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.servicios-section img:hover {
+  transform: scale(1.03);
+}
+
+.text-light-50 {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* ==== SECCIÓN HERO ==== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-attachment: fixed;
+}
+
+/* ==== TARJETAS DE SERVICIO ==== */
+.servicio-card {
+  background: #ffffff;
+  color: #222;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servicio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+}
+
+/* ==== COLORES DE TEXTO ==== */
+.text-light-50 {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Botón amarillo de INICIAR SESIÓN (navbar) */
+.btn-nav-login {
+    background-color: #ffc107;      /* amarillo */
+    border: 1px solid #ffc107;
+    color: #1f2933;                 /* texto oscuro */
+    font-weight: 700;
+    border-radius: 999px;           /* pill */
+    padding: 0.4rem 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-nav-login:hover {
+    background-color: #ffca2c;
+    border-color: #ffca2c;
+    color: #1f2933;
+    text-decoration: none;
+}
+
+/* Botón AMARILLO de INICIAR SESIÓN (navbar) */
+.btn-nav-login {
+    background-color: #ffc107;      /* amarillo */
+    border: 1px solid #ffc107;
+    color: #1f2933;                 /* texto oscuro */
+    font-weight: 700;
+    border-radius: 999px;           /* forma de píldora */
+    padding: 0.4rem 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-nav-login:hover {
+    background-color: #ffca2c;
+    border-color: #ffca2c;
+    color: #1f2933;
+    text-decoration: none;
+}
+
+/* Botón ROJO de CERRAR SESIÓN (navbar) */
+.btn-nav-logout {
+    background-color: #c1121f;      /* rojo */
+    border: 1px solid #c1121f;
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-nav-logout:hover {
+    background-color: #a10e19;
+    border-color: #a10e19;
+    color: #ffffff;
+    text-decoration: none;
+}
+/* ===============================
+   BOTÓN DE LOGIN/LOGOUT NAVBAR
+   =============================== */
+
+/* 🟡 Botón AMARILLO - Iniciar Sesión */
+.btn-nav-login {
+  background-color: #ffc107; /* amarillo */
+  border: 1px solid #ffc107;
+  color: #1f2933;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-nav-login:hover {
+  background-color: #ffca2c;
+  border-color: #ffca2c;
+  color: #1f2933;
+  text-decoration: none;
+}
+
+/* 🔴 Botón ROJO - Cerrar Sesión */
+.btn-nav-logout {
+  background-color: #c1121f !important;
+  border: 1px solid #c1121f !important;
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-nav-logout:hover {
+  background-color: #a10e19 !important;
+  border-color: #a10e19 !important;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+
+
+
+/* =====================================
+   🟡 BOTÓN AMARILLO PERSONALIZADO HOME
+   ===================================== */
+/* ======================================
+   🟡 BOTÓN PUINGENIERÍAS (ESTILO AMARILLO PLANO)
+   ====================================== */
+
+.btn-pui-yellow {
+  display: inline-block;
+  background-color: #ffcc00; /* Amarillo corporativo */
+  color: #000000; /* Texto negro */
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem 1.6rem;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efecto hover */
+.btn-pui-yellow:hover {
+  background-color: #ffdb4d; /* Amarillo más claro */
+  color: #000;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+/* Evita que los links vuelvan al azul */
+.btn-pui-yellow:link,
+.btn-pui-yellow:visited,
+.btn-pui-yellow:active {
+  color: #000;
+  text-decoration: none;
+}
+
+
+/* ===============================
+   🔹 NAVBAR
+   =============================== */
+.navbar {
+  background: linear-gradient(90deg, #002b5c, #004080);
+  padding: 10px 0;
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffcc00 !important;
+}
+
+/* ===============================
+   🟡 BOTÓN LOGIN (Amarillo)
+   =============================== */
+.btn-nav-login {
+  background-color: #ffc107;
+  border: 1px solid #ffc107;
+  color: #1f2933;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-nav-login:hover {
+  background-color: #ffdb4d;
+  border-color: #ffdb4d;
+  color: #000;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ===============================
+   🔴 BOTÓN LOGOUT (Rojo)
+   =============================== */
+.btn-nav-logout {
+  background-color: #c1121f !important;
+  border: 1px solid #c1121f !important;
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-nav-logout:hover {
+  background-color: #a10e19 !important;
+  border-color: #a10e19 !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ===============================
+   🟡 BOTÓN HERO (Solicita cotización)
+   =============================== */
+.btn-pui-yellow {
+  display: inline-block;
+  background-color: #ffcc00;
+  color: #000;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem 1.6rem;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-pui-yellow:hover {
+  background-color: #ffdb4d;
+  color: #000;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-pui-yellow:link,
+.btn-pui-yellow:visited,
+.btn-pui-yellow:active {
+  color: #000;
+  text-decoration: none;
+}
+
+/* ===============================
+   🔹 FOOTER
+   =============================== */
+.footer {
+  background: linear-gradient(90deg, #002b5c, #004080);
+  color: white;
+}
+
+.footer a {
+  color: #ffcc00;
+}
+
+.footer a:hover {
+  color: #ffd633;
+  text-decoration: underline;
+}
+
+
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+.contact-card h4 {
+    color: #2c3e50;
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 10px;
+  }
+  
+.contact-card p {
+    color: #495057;
+    margin-bottom: 15px;
+  }
+  
+.form-label {
+    color: #2c3e50 !important;
+    font-weight: 600;
+  }
+  
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+  }
+  
+.form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+  }
+  
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    padding: 12px 30px;
+    transition: all 0.3s ease;
+  }
+  
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+  }
+  
+.map-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+

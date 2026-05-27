@@ -1,0 +1,102 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Editar Orden de Compra{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Contenedor principal */
+    .oc-edit-wrapper {
+        max-width: 520px;
+        margin: auto;
+        padding-top: 20px;
+    }
+
+    /* Tarjeta */
+    .oc-edit-card {
+        background: rgba(15, 15, 15, 0.90);
+        padding: 35px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 204, 0, 0.25);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Título */
+    .oc-title {
+        font-size: 1.9rem;
+        font-weight: bold;
+        text-align: center;
+        color: #ffcc00;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.35);
+    }
+
+    /* Inputs generados por form.as_p */
+    .oc-edit-card input, 
+    .oc-edit-card select, 
+    .oc-edit-card textarea {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .oc-edit-card input:focus,
+    .oc-edit-card select:focus {
+        border-color: #ffcc00 !important;
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+    }
+
+    /* Botón */
+    .btn-edit-submit {
+        background-color: #ffcc00 !important;
+        color: black !important;
+        font-weight: bold;
+        border-radius: 40px;
+        padding: 12px 30px;
+        display: block;
+        margin: 20px auto 0 auto;
+        transition: 0.2s;
+    }
+
+    .btn-edit-submit:hover {
+        background-color: #e6b800 !important;
+        transform: scale(1.05);
+    }
+</style>
+
+<section class="home-admin py-5">
+    <div class="container">
+
+        <div class="oc-edit-wrapper">
+
+            <h2 class="oc-title">Editar Orden de Compra N° {{ oc.numero_orden_compra }}</h2>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="oc-edit-card">
+                    {{ form.as_p }}
+
+                    <button class="btn btn-edit-submit">Actualizar Orden</button>
+                    
+                </div>
+                
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

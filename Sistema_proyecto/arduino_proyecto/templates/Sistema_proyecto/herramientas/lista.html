@@ -1,0 +1,132 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+
+{% block title %}Herramientas | PUIngenierías{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .sensor-tag {
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        background: rgba(255, 204, 0, 0.15);
+        color: #ffcc00;
+        border: 1px solid rgba(255, 204, 0, 0.4);
+        font-weight: 600;
+    }
+
+    .icono-sensor {
+        font-size: 1.3rem;
+        margin-right: 6px;
+    }
+
+    .btn-detalle {
+        border-radius: 10px;
+        padding: 6px 14px;
+        transition: 0.2s;
+    }
+
+    .btn-detalle:hover {
+        background: #ffcc00 !important;
+        color: #002b5c !important;
+        transform: scale(1.05);
+    }
+</style>
+
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-warning mb-4">
+            <i class="bi bi-tools"></i> Herramientas Registradas
+        </h2>
+
+        <a href="{% url 'crear_herramienta' %}" class="btn btn-warning mb-3">
+            <i class="bi bi-plus-lg"></i> Nueva Herramienta
+        </a>
+
+        <div class="table-responsive tabla-estilo">
+            <table class="table table-dark table-hover align-middle">
+                <thead>
+                    <tr class="text-warning">
+                        <th>Herramienta</th>
+                        <th>Estado</th>
+                        <th>Sensor Asociado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for h in herramientas %}
+                    <tr>
+
+                        <!-- NOMBRE -->
+                        <td>
+                            <strong class="text-light">{{ h.nombre }}</strong>
+                        </td>
+
+                        <!-- ESTADO -->
+                        <td>
+                            {% if h.estado == "en_uso" %}
+                                <span class="badge bg-danger">En uso</span>
+                            {% elif h.estado == "disponible" %}
+                                <span class="badge bg-success">Disponible</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Mantenimiento</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- SENSOR ASOCIADO -->
+                        <td>
+                            {% if h.sensor %}
+                                {% if h.sensor.tipo == "SCT-013" %}
+                                    <i class="bi bi-lightning-charge-fill icono-sensor"></i>
+                                {% elif h.sensor.tipo == "DHT22" %}
+                                    <i class="bi bi-thermometer-sun icono-sensor"></i>
+                                {% elif h.sensor.tipo == "SW420" %}
+                                    <i class="bi bi-activity icono-sensor"></i>
+                                {% elif h.sensor.tipo == "RC522" %}
+                                    <i class="bi bi-upc-scan icono-sensor"></i>
+                                {% endif %}
+                                <span class="sensor-tag">
+                                    {{ h.sensor.tipo }} (ID {{ h.sensor.id }})
+                                </span>
+                            {% else %}
+                                <span class="text-muted">— No asignado —</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- ACCIONES -->
+                        <td class="text-center">
+                            <a href="{% url 'detalle_herramienta' h.id %}"
+                               class="btn btn-outline-warning btn-sm btn-detalle">
+                                Ver Detalle
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">
+                            No hay herramientas registradas.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

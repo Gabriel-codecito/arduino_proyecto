@@ -1,0 +1,100 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% block title %}Detalle Orden de Compra{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .oc-card {
+        background: rgba(20, 20, 20, 0.9);
+        padding: 30px;
+        border-radius: 18px;
+        max-width: 550px;
+        margin: auto;
+        box-shadow: 0 0 25px rgba(0,0,0,0.4);
+        color: white;
+    }
+
+    .oc-label {
+        color: #ffcc00;
+        font-weight: bold;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .oc-value {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+
+    .cot-info {
+        background: rgba(255,255,255,0.1);
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        margin-top: 5px;
+    }
+</style>
+
+
+<section class="home-admin py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold text-warning mb-4">
+            Orden de Compra N° {{ oc.id  }}
+        </h2>
+
+        <div class="oc-card">
+
+            <div class="text-start">
+
+                <span class="oc-label">Empresa:</span>
+                <div class="oc-value">{{ oc.empresa }}</div>
+
+                <span class="oc-label">Monto Total:</span>
+                <div class="oc-value">${{ oc.monto_total }}</div>
+
+                <span class="oc-label">Fecha de Emisión:</span>
+                <div class="oc-value">{{ oc.fecha|date:"d-m-Y H:i" }}</div>
+
+                <span class="oc-label mt-3">Presupuesto Asociado:</span>
+                <div class="cot-info">
+                    ID Presupuesto: <strong>{{ oc.presupuesto.id }}</strong><br>
+                    Cotización: <strong>{{ oc.presupuesto.cotizacion.id }}</strong><br>
+                    Cliente: <strong>{{ oc.presupuesto.cotizacion.nombre }}</strong><br>
+                    Empresa: <strong>{{ oc.presupuesto.cotizacion.empresa }}</strong><br>
+                    Estado Presupuesto: <strong>{{ oc.presupuesto.estado }}</strong>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'editar_oc' oc.id %}" class="btn btn-warning px-4">
+                    Editar
+                </a>
+
+                <a href="{% url 'lista_oc' %}" class="btn px-4" style="background:#5a5a5a; color:white;">
+                    Volver
+                </a>
+
+                <a href="{% url 'crear_ot' oc.presupuesto.id %}" class="btn btn-warning px-4">
+                    Crear Orden Trabajo
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

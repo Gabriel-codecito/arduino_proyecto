@@ -1,0 +1,99 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+
+{% block title %}Condiciones del Taller{% endblock %}
+
+{% block content %}
+<section class="home-admin py-5">
+    <div class="container">
+
+        <h2 class="fw-bold text-warning mb-2">
+            Condiciones Ambientales del Taller
+        </h2>
+        <p class="text-light mb-4">
+            Monitoreo automático cada 10 minutos desde sensores IoT
+        </p>
+
+        <div class="table-responsive tabla-estilo">
+            <table class="table table-dark table-hover text-center align-middle">
+
+            <thead>
+            <tr class="text-warning">
+                <th>Fecha</th>
+                <th>Temperatura (°C)</th>
+                <th>Humedad (%)</th>
+                <th>Vibración</th>
+                <th>Estado</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for r in registros %}
+            <tr>
+
+            <td>{{ r.fecha|date:"d-m-Y H:i" }}</td>
+
+            <td>
+                {{ r.temperatura }}
+                {% if r.temp_estado == "normal" %}
+                    <span class="badge bg-primary">Normal</span>
+                {% elif r.temp_estado == "leve" %}
+                    <span class="badge bg-warning text-dark">Leve</span>
+                {% else %}
+                    <span class="badge bg-danger">Riesgo</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {{ r.humedad }}
+                {% if r.hum_estado == "normal" %}
+                    <span class="badge bg-primary">Normal</span>
+                {% elif r.hum_estado == "leve" %}
+                    <span class="badge bg-warning text-dark">Leve</span>
+                {% else %}
+                    <span class="badge bg-danger">Riesgo</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {{ r.vibracion }}
+                {% if r.vib_estado == "normal" %}
+                    <span class="badge bg-primary">Normal</span>
+                {% elif r.vib_estado == "leve" %}
+                    <span class="badge bg-warning text-dark">Leve</span>
+                {% else %}
+                    <span class="badge bg-danger">Riesgo</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if r.estado_general == "normal" %}
+                    <span class="badge bg-primary px-3">Normal</span>
+                {% elif r.estado_general == "leve" %}
+                    <span class="badge bg-warning text-dark px-3">Leve</span>
+                {% else %}
+                    <span class="badge bg-danger px-3">En Riesgo</span>
+                {% endif %}
+            </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+            <td colspan="5" class="text-muted">
+                No hay registros ambientales aún
+            </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

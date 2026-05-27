@@ -1,0 +1,503 @@
+<!--AUTORES: Gabriel Aparicio y Jeaninne Aparicio – Proyecto IoT Puingenierías-->
+<!--FECHA DE INICIO: 03-09-2024-->
+<!--LICENCIA: Trabajo Académico – Distribución Restringida-->
+<!--ÚLTIMA ACTUALIZACIÓN: 15-12-2025-->
+
+{% extends "Sistema_proyecto/administrador/dashboard_admin.html" %}
+{% load static %}
+{% load formato_chile %}
+{% block title %}Informe Energético | Puingenierías{% endblock %}
+{% block content %}
+<section class="py-5 text-light fade-in">
+  <div class="container">
+    <div class="mb-4 text-center">
+      <h2 class="fw-bold text-warning"> Informe Energético</h2>
+      <p class="text-light-50">
+        Analiza el consumo energético por rango de fechas y exporta tus datos.
+      </p>
+    </div>
+
+    <!-- FILTROS Y EXPORTAR -->
+    <div class="card-panel p-4 mb-4">
+      <form method="GET" class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label text-light-50">Fecha Inicio</label>
+          <input type="date" name="fecha_inicio" class="form-control" value="{{ fecha_inicio }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label text-light-50">Fecha Fin</label>
+          <input type="date" name="fecha_fin" class="form-control" value="{{ fecha_fin }}">
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+          <button type="submit" class="btn btn-warning fw-bold flex-fill">
+            Filtrar
+          </button>
+          <a href="{% url 'exportar_mediciones_excel' %}" class="btn btn-success fw-bold shadow-sm mb-3">
+            <i class="bi bi-file-earmark-excel"></i> Exportar Mediciones (Excel)
+          </a>
+          <a href="{% url 'exportar_informe_excel' %}" class="btn btn-primary fw-bold shadow-sm mb-3">
+            <i class="bi bi-clipboard-data"></i> Exportar Informe Energético
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <!-- TABLA ÓRDENES DE TRABAJO -->
+    <div class="card-panel p-4 mb-4">
+      <h5 class="text-warning fw-bold mb-3">
+        <i class="fa-solid fa-clipboard-list"></i> Órdenes de Trabajo
+      </h5>
+      <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+        <table class="table table-dark table-striped align-middle text-center shadow">
+          <thead style="background-color: #ffcc00; color: #002b5c;">
+            <tr>
+              <th>ID OT</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Energía (kWh)</th>
+              <th>Costo Total</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ot in ordenes %}
+            <tr>
+              <td>{{ ot.id }}</td>
+              <td>{{ ot.cliente }}</td>
+              <td>{{ ot.fecha_creacion|date:"d/m/Y H:i" }}</td>
+              <td>
+                {% if ot.energia_total_kwh %}
+                  {{ ot.energia_total_kwh|floatformat:6 }}
+                {% else %}
+                  —
+                {% endif %}
+              </td>
+              <td>
+                {% with factura=ot.factura_set.first %}
+                  {% if factura %}
+                    {{ factura.monto_total|peso_chileno }}
+                  {% else %}
+                    —
+                  {% endif %}
+                {% endwith %}
+              </td>
+              <td>
+                <a href="{% url 'exportar_ot_excel' ot.id %}" class="btn btn-success btn-sm fw-bold">
+                  <i class="bi bi-file-earmark-excel"></i> Excel
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" class="py-4 text-light-50">
+                <i class="fa-solid fa-circle-info"></i> No hay órdenes de trabajo.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLA MEDICIONES -->
+    <div class="card-panel p-4 mb-4">
+      <h5 class="text-warning fw-bold mb-3">
+        <i class="fa-solid fa-chart-line"></i> Resultados del Informe
+      </h5>
+      <div class="table-responsive" style="max-height: 450px; overflow-y: auto;">
+        <table id="tabla-mediciones" class="table table-dark table-striped align-middle text-center shadow">
+          <thead style="background-color: #ffcc00; color: #002b5c;">
+            <tr>
+              <th>Fecha</th>
+              <th>Potencia (W)</th>
+              <th>Energía (kWh)</th>
+              <th>Costo (CLP)</th>
+              <th>Temperatura</th>
+              <th>Humedad</th>
+              <th>Vibración</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in datos %}
+            <tr>
+              <td>{{ d.fecha|date:"d/m/Y H:i" }}</td>
+              {% if d.potencia %}
+                <td>{{ d.potencia|floatformat:2 }}</td>
+              {% else %}
+                <td>—</td>
+              {% endif %}
+              {% if d.energia %}
+                <td>{{ d.energia|floatformat:6 }}</td>
+              {% else %}
+                <td>—</td>
+              {% endif %}
+              {% if d.costo %}
+                <td>{{ d.costo|peso_chileno }}</td>
+              {% else %}
+                <td>—</td>
+              {% endif %}
+              <td>{{ d.temperatura }}</td>
+              <td>
+                {% if d.humedad %}
+                  {{ d.humedad|floatformat:1 }}%
+                {% else %}
+                  —
+                {% endif %}
+              </td>
+              <td>
+                {% if d.vibracion %}
+                  {{ d.vibracion }}
+                {% else %}
+                  —
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" class="py-4 text-light-50 text-center">
+                <i class="fa-solid fa-circle-info"></i> No hay mediciones en este rango.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 🔮 SECCIÓN DE PREDICCIÓN DE COSTOS FUTUROS (ML)              -->
+    <!-- ============================================================ -->
+    <div class="card-panel p-4 mb-4" id="seccion-prediccion">
+
+      <!-- Encabezado -->
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+        <h5 class="text-warning fw-bold mb-0">
+          <i class="fa-solid fa-brain"></i> Predicción de Costos Futuros
+          <span class="badge ms-2 px-2 py-1" style="background:#ffcc0022; color:#ffcc00; border:1px solid #ffcc0055; font-size:0.65rem; font-weight:600; letter-spacing:1px; border-radius:4px;">ML</span>
+        </h5>
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+          <!-- Selector de horizonte -->
+          <select id="horizonte-select" class="form-select form-select-sm"
+                  style="background:#0d1b2a; color:#e0e6f0; border:1px solid #ffcc0055; width:auto;">
+            <option value="7">Próximos 7 días</option>
+            <option value="14">Próximos 14 días</option>
+            <option value="30" selected>Próximos 30 días</option>
+          </select>
+          <button id="btn-predecir" class="btn btn-warning btn-sm fw-bold px-3"
+                  onclick="cargarPrediccion()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Predecir
+          </button>
+        </div>
+      </div>
+
+      <!-- Estado / spinner -->
+      <div id="pred-estado" class="text-center py-3 text-light-50" style="display:none;">
+        <div class="spinner-border spinner-border-sm text-warning me-2" role="status"></div>
+        Calculando predicción con el modelo ML...
+      </div>
+
+      <!-- Alerta de error -->
+      <div id="pred-error" class="alert alert-danger" style="display:none;">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="pred-error-msg"></span>
+      </div>
+
+      <!-- KPI Cards -->
+      <div id="pred-kpis" class="row g-3 mb-4" style="display:none;">
+        <div class="col-6 col-md-3">
+          <div class="pred-kpi-card text-center p-3">
+            <div class="pred-kpi-label">kWh Total Estimado</div>
+            <div class="pred-kpi-value" id="kpi-kwh">—</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="pred-kpi-card text-center p-3">
+            <div class="pred-kpi-label">Costo Total Estimado</div>
+            <div class="pred-kpi-value" id="kpi-costo">—</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="pred-kpi-card text-center p-3">
+            <div class="pred-kpi-label">Costo Diario Promedio</div>
+            <div class="pred-kpi-value" id="kpi-diario">—</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="pred-kpi-card text-center p-3">
+            <div class="pred-kpi-label">Día Pico</div>
+            <div class="pred-kpi-value text-warning" id="kpi-pico">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico -->
+      <div id="pred-grafico-wrap" style="display:none; position:relative; height:320px;">
+        <canvas id="pred-chart"></canvas>
+      </div>
+
+      <!-- Tabla de predicciones -->
+      <div id="pred-tabla-wrap" class="table-responsive mt-4" style="display:none; max-height:320px; overflow-y:auto;">
+        <table class="table table-dark table-striped align-middle text-center shadow">
+          <thead style="background-color: #ffcc00; color: #002b5c;">
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>kWh Estimado</th>
+              <th>Costo Estimado (CLP)</th>
+              <th>Tendencia</th>
+            </tr>
+          </thead>
+          <tbody id="pred-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Nota metodológica -->
+      <p class="text-light-50 mt-3 mb-0" style="font-size:0.78rem;">
+        <i class="fa-solid fa-circle-info"></i>
+        Predicción generada con <strong>RandomForest</strong> entrenado con mediciones históricas.
+        Los valores son estimaciones y pueden variar según condiciones reales de operación.
+      </p>
+    </div>
+    <!-- FIN SECCIÓN PREDICCIÓN -->
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ESTILOS DE LA SECCIÓN PREDICCIÓN                             -->
+<!-- ============================================================ -->
+<style>
+  /* KPI Cards */
+  .pred-kpi-card {
+    background: linear-gradient(135deg, #0d1b2a 60%, #1a2e45);
+    border: 1px solid #ffcc0044;
+    border-radius: 10px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .pred-kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px #ffcc0022;
+  }
+  .pred-kpi-label {
+    font-size: 0.72rem;
+    color: #8898aa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .pred-kpi-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffcc00;
+  }
+  /* Animación de entrada */
+  #seccion-prediccion {
+    animation: slideUp .5s ease both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS                                                       -->
+<!-- ============================================================ -->
+<!-- Chart.js (solo si no está ya cargado en el base template) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+/* ---------------------------------------------------------------
+   Actualización en tiempo real de la tabla de mediciones
+--------------------------------------------------------------- */
+function actualizarTabla() {
+  fetch("{% url 'mediciones_dia' %}")
+    .then(r => r.json())
+    .then(data => {
+      const tbody = document.querySelector("#tabla-mediciones tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      data.mediciones.forEach(m => {
+        let fila = `
+          <tr>
+            <td>${m.fecha}</td>
+            <td>${m.sensor}</td>
+            <td>${m.corriente.toFixed(2)}</td>
+            <td>${m.voltaje}</td>
+            <td>${m.potencia.toFixed(2)}</td>
+            <td>${m.energia.toFixed(6)}</td>
+            <td>${new Intl.NumberFormat('es-CL', {style:'currency', currency:'CLP'}).format(m.costo)}</td>
+          </tr>`;
+        tbody.innerHTML += fila;
+      });
+    });
+}
+// setInterval(actualizarTabla, 3000);
+// actualizarTabla();
+
+/* ---------------------------------------------------------------
+   Predicción ML
+--------------------------------------------------------------- */
+let predChart = null;   // instancia Chart.js (evitar duplicados)
+
+function clpFormat(n) {
+  return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(n);
+}
+
+function cargarPrediccion() {
+  const dias = document.getElementById('horizonte-select').value;
+
+  // Reset UI
+  document.getElementById('pred-error').style.display  = 'none';
+  document.getElementById('pred-kpis').style.display   = 'none';
+  document.getElementById('pred-grafico-wrap').style.display = 'none';
+  document.getElementById('pred-tabla-wrap').style.display   = 'none';
+  document.getElementById('pred-estado').style.display = 'flex';
+  document.getElementById('btn-predecir').disabled = true;
+
+  // ✅ Llamada al endpoint Django del modelo ML
+  fetch(`/api/prediccion/?dias=${dias}`)
+    .then(r => {
+      if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
+      return r.json();
+    })
+    .then(data => {
+      // data esperado:
+      // {
+      //   predicciones: [
+      //     { fecha: "2025-01-20", kwh: 12.3, costo: 1845 },
+      //     ...
+      //   ]
+      // }
+      if (!data.predicciones || data.predicciones.length === 0) {
+        throw new Error('El modelo no devolvió predicciones. Verifica que esté entrenado.');
+      }
+      renderPrediccion(data.predicciones);
+    })
+    .catch(err => {
+      document.getElementById('pred-error-msg').textContent = err.message;
+      document.getElementById('pred-error').style.display = 'block';
+    })
+    .finally(() => {
+      document.getElementById('pred-estado').style.display = 'none';
+      document.getElementById('btn-predecir').disabled = false;
+    });
+}
+
+function renderPrediccion(predicciones) {
+  const fechas  = predicciones.map(p => p.fecha);
+  const kwhs    = predicciones.map(p => parseFloat(p.kwh));
+  const costos  = predicciones.map(p => parseFloat(p.costo));
+
+  // ── KPIs ──────────────────────────────────────────────────────
+  const totalKwh   = kwhs.reduce((a, b) => a + b, 0);
+  const totalCosto = costos.reduce((a, b) => a + b, 0);
+  const promDiario = totalCosto / predicciones.length;
+  const idxPico    = costos.indexOf(Math.max(...costos));
+
+  document.getElementById('kpi-kwh').textContent   = totalKwh.toFixed(2) + ' kWh';
+  document.getElementById('kpi-costo').textContent  = clpFormat(totalCosto);
+  document.getElementById('kpi-diario').textContent = clpFormat(promDiario);
+  document.getElementById('kpi-pico').textContent   = fechas[idxPico];
+  document.getElementById('pred-kpis').style.display = 'flex';
+
+  // ── Gráfico ────────────────────────────────────────────────────
+  if (predChart) predChart.destroy();   // evitar duplicar canvas
+
+  const ctx = document.getElementById('pred-chart').getContext('2d');
+  predChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: fechas,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Costo Estimado (CLP)',
+          data: costos,
+          backgroundColor: 'rgba(255, 204, 0, 0.25)',
+          borderColor: '#ffcc00',
+          borderWidth: 1.5,
+          borderRadius: 4,
+          yAxisID: 'yCosto',
+        },
+        {
+          type: 'line',
+          label: 'kWh Estimado',
+          data: kwhs,
+          borderColor: '#38bdf8',
+          backgroundColor: 'rgba(56,189,248,0.08)',
+          borderWidth: 2,
+          pointRadius: 3,
+          tension: 0.35,
+          fill: true,
+          yAxisID: 'yKwh',
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: { color: '#c8d6e5', font: { size: 12 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.yAxisID === 'yCosto')
+                return ' Costo: ' + clpFormat(ctx.raw);
+              return ' kWh: ' + ctx.raw.toFixed(4);
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8898aa', maxRotation: 45, font: { size: 11 } },
+          grid:  { color: 'rgba(255,255,255,0.05)' }
+        },
+        yCosto: {
+          position: 'left',
+          ticks: {
+            color: '#ffcc00',
+            callback: v => clpFormat(v)
+          },
+          grid: { color: 'rgba(255,204,0,0.08)' }
+        },
+        yKwh: {
+          position: 'right',
+          ticks: { color: '#38bdf8' },
+          grid:  { drawOnChartArea: false }
+        }
+      }
+    }
+  });
+
+  document.getElementById('pred-grafico-wrap').style.display = 'block';
+
+  // ── Tabla ──────────────────────────────────────────────────────
+  const tbody = document.getElementById('pred-tbody');
+  tbody.innerHTML = '';
+
+  predicciones.forEach((p, i) => {
+    const tendencia = i === 0
+      ? '<span class="text-light-50">—</span>'
+      : costos[i] > costos[i-1]
+        ? '<span class="text-danger"><i class="fa-solid fa-arrow-trend-up"></i> Sube</span>'
+        : '<span class="text-success"><i class="fa-solid fa-arrow-trend-down"></i> Baja</span>';
+
+    tbody.innerHTML += `
+      <tr ${i === idxPico ? 'style="background:rgba(255,204,0,0.07);"' : ''}>
+        <td>${i + 1}</td>
+        <td>${p.fecha}</td>
+        <td>${parseFloat(p.kwh).toFixed(4)}</td>
+        <td><strong>${clpFormat(p.costo)}</strong></td>
+        <td>${tendencia}</td>
+      </tr>`;
+  });
+
+  document.getElementById('pred-tabla-wrap').style.display = 'block';
+}
+</script>
+{% endblock %}

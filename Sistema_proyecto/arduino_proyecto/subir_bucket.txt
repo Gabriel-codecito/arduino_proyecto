@@ -1,0 +1,5 @@
+@echo off
+cd C:\Users\yanyc\OneDrive\Escritorio\sistema_energia\arduino_proyecto
+aws s3 sync . s3://puingenieria-proyecto --exclude ".venv/*" --exclude "__pycache__/*" --exclude "*.pyc" --exclude ".git/*"
+echo ✅ Archivos sincronizados con el bucket puingenieria-proyecto
+pause
