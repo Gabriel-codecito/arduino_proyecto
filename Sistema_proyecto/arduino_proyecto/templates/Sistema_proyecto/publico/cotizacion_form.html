@@ -160,9 +160,11 @@
 
         {% if messages %}
         {% for message in messages %}
+        {% if 'cotización' in message.message|lower or 'correo' in message.message|lower or 'formulario' in message.message|lower %}
         <div style="background:orange; color:white; padding:10px; margin:10px 0;">
             {{ message }}
         </div>
+        {% endif %}
         {% endfor %}
         {% endif %}
 
